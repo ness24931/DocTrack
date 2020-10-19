@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/style_main_user.css" type="text/css">
+    <link rel="stylesheet" href="../css/style_general.css" type="text/css">
+    <link rel="stylesheet" href="../css/style_panel_admin.css" type="text/css">    
+    <title>Municipalidad de San Pablo</title>
+</head>
+
+<body onload="loadHeader()">
+    <header id="head_user">
+    </header>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <ul id="ul_menu">
+        </ul>
+    </div>
+    <nav class="navbar navbar-expand-lg bg-light navbar-light border border-dark" id="navBar_main">
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class=" nav navbar-nav  mx-auto">
+                <li class="nav-item">
+                    <a id="link_procesos" class="nav-link" href="javascript:;" onclick="openNav(this)">Procesos</a>
+                </li>
+                <li class="nav-item">
+                    <a id="link_requisitos" class="nav-link" href="javascript:;" onclick="openNav(this)">Requisitos</a>
+                </li>
+                <li class="nav-item">
+                    <a id="link_usuarios" class="nav-link" href="javascript:;" onclick="openNav(this)">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a id="link_logout" class="nav-link" href="http://localhost:8080">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container" id="main_area">
+        <!--create user-->
+        <div id="create_user" class="row justify-content-md-center">
+            <div class="col-md-8 offset-md-4">
+                <label for="u_dni">Número de cédula</label>
+                <input type="text" id="e_dni">
+                <label for="u_name">Nombre</label>
+                <input type="text" id="e_name">
+                <label for="u_first">Primer Apellido</label>
+                <input type="text" id="e_first">
+                <label for="u_second">Segundo Apellido</label>
+                <input type="text" id="e_second">
+                <label for="u_email">Correo Electrónico</label>
+                <input type="text" id="e_email">
+                <label for="u_tel">Teléfono</label>
+                <input type="text" id="e_tel">
+                <select id="e_department">
+                </select>
+                <select id="e_position">
+                    <option value="1">Puesto</option>
+                    <option value="2">Secretario(a)</option>
+                    <option value="3">Alcalde</option>
+                    <option value="4">Coordinador(a)</option>
+                    <option value="5">Oficinista</option>
+                </select>
+                <label for="u_user">Nombre de Usuario</label>
+                <input type="text" id="u_user">
+                <label for="u_pass">Contraseña</label>
+                <input type="text" id="u_pass" readonly>
+                <button type="button" onclick="genPass('u_pass')">Generar Contraseña</button>
+                <button type="button" onclick="addEmployee()">Crear Usuario</button>
+            </div>
+        </div>
+        <!--update user-->
+        <div id="updt_user" class="container">
+            <div class="row justify-content-center">
+                <div class="col col-md-8">
+                    <table border="1" class="table table-hover table-responsive-sm table-sm">
+                        <caption>Lista de Usuarios</caption>
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Número de cédula</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Primer Apellido</th>
+                                <th scope="col">Segundo Apellido</th>
+                                <th scope="col">Correo Electrónico</th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col">Departamento</th>
+                                <th scope="col">Puesto</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Nombre de Usuario</th>
+                                <th scope="col">Contraseña</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyTable_users">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="updt_panel" class="row justify-content-center">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-8 offset-md-4">
+                            <label for="e_emailUpdt">Correo Electrónico</label>
+                            <input type="text" id="e_emailUpdt">
+                            <label for="e_telUpdt">Teléfono</label>
+                            <input type="text" id="e_telUpdt">
+                            <select id="e_departmentUpdt">
+                                <option>Departamento</option>
+                            </select>
+                            <select id="e_positionUpdt">
+                                <option>Puesto</option>
+                                <option>Secretario(a)</option>
+                                <option>Alcalde</option>
+                                <option>Coordinador(a)</option>
+                                <option>Oficinista</option>
+                            </select>
+                            <label for="u_userUpdt">Nombre de Usuario</label>
+                            <input type="text" id="u_userUpdt">
+                            <label for="u_passUpdt">Contraseña</label>
+                            <input type="text" id="u_passUpdt" readonly>
+                            <button type="button" onclick="genPass('u_passUpdt')">Generar Contraseña</button>
+                            <div class="col-8 offset-md-2">
+                                <button id="bntUpdateU" type="button">Actualizar Usuario</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--create req-->
+        <div id="create_req" class="container">
+            <div class="row justify-content-center">
+                <h4>Crear Nuevo</h4>
+                <label for="name_req">Nombre</label>
+                <input type="text" id="name_req">
+                <label for="desc_req">Descripción</label>
+                <input type="text" id="desc_req">
+                <label for="time_exp">Tiempo de expiración</label>
+                <input type="text" id="time_exp">
+                <button type="button" onclick="updt_req()">Crear</button>
+            </div>
+        </div>
+        <!--update req-->
+        <div id="updt_req" class="container">
+            <div class="row  justify-content-center">
+                <table border="1" class="table table-hover table-responsive-sm table-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="height: 35px;">
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr style="height: 35px;">
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h4>Actualizar</h4>
+                <label for="name_reqUdpt">Nombre</label>
+                <input type="text" id="name_reqUdpt">
+                <label for="desc_reqUpdt">Descripción</label>
+                <input type="text" id="desc_reqUpdt">
+                <button type="button" onclick="updt_req()">Actualizar</button>
+            </div>
+        </div>
+        <!--create proc-->
+        <div id="create_proc" class="container">
+            <div class="row  justify-content-center">
+                <div class="col-6 align-text-center">
+                    <div class="form-group row">
+                        <select id="list_req" onchange="loadInfo()" class="form-control">
+                            <option value="-1">Lista de Requisitos</option>
+                        </select>
+                        <button type="button" onclick="addReq()">Agregar Requisito</button>
+                    </div>
+                    <textarea id="info_req" rows="5" cols="50" readonly></textarea>
+                    <div class="form-group row">
+                        <label for="title_proc">Titulo</label>
+                        <input type="text" id="title_proc">
+                        <label for="desc_proc">Descripción</label>
+                        <input type="text" id="desc_proc">
+                        <ul id="panelAlreadyAdd">
+                        </ul>
+                    </div>
+                    <button type="button" onclick="createProc()">Crear</button>
+                </div>
+            </div>
+        </div>
+        <!--update proc-->
+        <div id="updt_proc" class="container">
+            <div class="row  justify-content-center">
+                <div>
+                    <table border="1" class="table table-hover table-responsive-sm table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Titulo</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyTablaUpdt"></tbody>
+                    </table>
+                </div>
+                <div>
+                    <ul id="list_reqUpdt">
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <!-- <select id="list_reqUpdt">
+                    <option value="-1">Lista de Requisitos</option>
+                </select> -->
+                <label for="title_procUpdt">Titulo</label>
+                <input type="text" id="title_procUpdt">
+                <label for="desc_procUdpt">Descripción</label>
+                <input type="text" id="desc_procUdpt">
+                <button type="button" onclick="updateProc()">Actualizar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../js/main_user.js"></script>
+    <script src="../js/loadHeader.js"></script>
+    <script src="../js/getData.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

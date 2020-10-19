@@ -1,0 +1,19 @@
+#main_area > div {
+  position: relative;
+  display: none;
+  z-index: -1;
+}
+
+table {
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+#create_proc {
+  z-index: 40;
+  display: block;
+}
+
+textarea {
+  resize: none;
+}

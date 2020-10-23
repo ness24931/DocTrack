@@ -25,9 +25,9 @@ import com.una.muni.model.TRequest;
 import com.una.muni.model.TRequirement;
 import com.una.muni.repository.t_requestsRepository;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+// @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
-@RequestMapping(value = "t_requests/", consumes = MediaType.ALL_VALUE)
+@RequestMapping(value = "t_requests/"/*, consumes = MediaType.ALL_VALUE*/)
 public class Control_Request {
 	@Autowired
 	private t_requestsRepository repo;
@@ -87,7 +87,7 @@ public class Control_Request {
 	}
 
 	@PostMapping(value = "update")
-	public String update(@RequestParam(name = "title") String title_proc,
+	public String update(@RequestParam(name = "idprocess") String idproc,@RequestParam(name = "title") String title_proc,
 			@RequestParam(name = "description") String desc_proc, @RequestParam(name = "TRequirements") String lista) {
 		JSONArray list = new JSONArray(lista);
 		List<TRequirement> requirements = new ArrayList<>();
@@ -103,6 +103,7 @@ public class Control_Request {
 			requirements.add(tr);
 		}
 		TRequest rqst = new TRequest();
+		rqst.setRequestId(Integer.parseInt(idproc));
 		rqst.setTitle(title_proc);
 		rqst.setDescription(desc_proc);
 		rqst.setTRequirements(new HashSet<TRequirement>(requirements));

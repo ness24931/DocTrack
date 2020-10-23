@@ -26,7 +26,7 @@ import com.una.muni.model.TDepartment;
 import com.una.muni.repository.t_employeesRepository;
 import com.una.muni.repository.t_usersRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
+// @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "tusersE/")
 public class Control_User {
@@ -106,6 +106,8 @@ public class Control_User {
 		JSONObject department = employee.getJSONObject("tdepartment");
 		JSONArray resolutions = employee.getJSONArray("tresolutions");
 		JSONArray tickets = employee.getJSONArray("ttickets");
+
+		System.out.println(user.toString());
 
 		TDepartment depa = new TDepartment();
 		depa.setDepartmentId(department.getInt("departmentId"));

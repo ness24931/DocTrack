@@ -21,6 +21,7 @@ function login() {
         }).then(datos => {
             if (datos.rol === 1) {
                 // console.log(JSON.stringify(datos));
+                window.alert("Se ha logueado")
                 window.location.href = "html/view_admin.html";
             } else
             if (datos.rol === -1) {

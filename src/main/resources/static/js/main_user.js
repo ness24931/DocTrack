@@ -1,4 +1,4 @@
-import { TDepartment } from "./class.js";
+// import { TDepartment } from "./class.js";
 
 var listUsuarios = [];
 var listDepartments = [];
@@ -480,3 +480,6 @@ function selecProc(id) {
         d.value = request.description;
     }
 }
+
+
+

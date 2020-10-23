@@ -46,6 +46,10 @@ public class TUser implements Serializable {
 //	@JoinColumn(name="ROLE_ID", nullable=false)
 //	private TRole TRole2;
 
+	// @OneToOne(fetch = FetchType.EAGER)
+	// @JoinColumn(name = "CLIENT_ID",nullable = false)
+	// private TClient TCliente;
+
 	public TUser() {
 	}
 	

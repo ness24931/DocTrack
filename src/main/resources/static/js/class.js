@@ -15,7 +15,7 @@ class TRole {
     }
 }
 
-export class TDepartment {
+class TDepartment {
     // TEmployee tEmployee => este atributo es el que dice quien es el lider de ese departamento
     constructor(departmentId, departmentName) {
         this.departmentId = departmentId;

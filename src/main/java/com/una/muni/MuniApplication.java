@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MuniApplication {
 
 	public static void main(String[] args) {
+		/*esta es una prueba*/
 		SpringApplication.run(MuniApplication.class, args);
 	}
 

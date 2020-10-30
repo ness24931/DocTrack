@@ -37,11 +37,11 @@ tbody > tr:hover {
 
 #btn_crud{
   background-color: #02315f;
-  padding: 10px;
+  padding: 50px;
   text-align: center;
-  margin: 150px auto;
+  margin: 20px auto;
   width: 215px;
-  height: 210px;
+  height: 410px;
 }
 
 #btn_crud>button{
@@ -50,5 +50,6 @@ tbody > tr:hover {
 }
 
 #text_whereIam{
-  color: coral;
+  color:white;
+  font-size: 2vw ;
 }

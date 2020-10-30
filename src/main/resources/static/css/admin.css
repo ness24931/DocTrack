@@ -1,6 +1,10 @@
 #header_table {
   background-color: darkgray;
 }
+#head_user{
+
+  color:black;
+}
 
 #tabla {
   text-align: center;
@@ -19,7 +23,7 @@
   top: 0;
 }
 tbody > tr:hover {
-  background-color: blue;
+  background-color: #02315f;
   color: white;
 }
 #btn_crud {

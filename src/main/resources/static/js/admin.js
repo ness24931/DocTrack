@@ -38,7 +38,7 @@ function loadProcess(datos) {
     listTramites = datos;
     cargarTablaTramites(listTramites);
     requestRequirements();
-    document.getElementById('text_whereIam').innerText = '-Módulo de tramites';
+    document.getElementById('text_whereIam').innerText = '·Módulo de tramites·';
     document.getElementById('btn_filter').setAttribute('data-target', '#modal_filter_tramites');
     document.getElementById('btn_insert').setAttribute('data-target', '#modal_proc');
     document.getElementById('btn_updt').setAttribute('data-target', '#updt_proc');
@@ -196,7 +196,7 @@ function menuUsers() {
 function loadUsers(datos) {
     listUsuarios = datos;
     cargarTablaUsers(listUsuarios);
-    document.getElementById('text_whereIam').innerText = '-Módulo de usuarios';
+    document.getElementById('text_whereIam').innerText = '·Módulo de usuarios·';
     document.getElementById('btn_filter').setAttribute('data-target', '#modal_filter');
     document.getElementById('btn_insert').setAttribute('data-target', '#modal_Admin');
     document.getElementById('btn_updt').setAttribute('data-target', '#updt_panel');
@@ -345,6 +345,14 @@ function selectRow(i) {
 function seleccionar() {
     requestDepartments();
     loadDepartments(listDepartments, 'e_departmentUpdt');
+///////////////////////////////////////////////////////////////////
+let e_dniUpdt = document.getElementById('e_dniUpdt');
+let e_nombreUpdt = document.getElementById('e_nombreUpdt');
+let e_first_surnameUpdt = document.getElementById('e_first_surnameUpdt');
+let e_second_surnameUpdt = document.getElementById('e_second_surnameUpdt');
+/////////////////////////////////////////////////////////////
+
+
     let e_emailUpdt = document.getElementById('e_emailUpdt');
     let e_telUpdt = document.getElementById('e_telUpdt');
     let e_departmentUpdt = document.getElementById('e_departmentUpdt');
@@ -356,7 +364,12 @@ function seleccionar() {
     btnUpdate.addEventListener('click', function () {
         updateUser();
     });
-
+    //////////////////////////////////////////////////////
+    e_dniUpdt.value = selected.temployee.dni;
+    e_nombreUpdt.value = selected.temployee.first_name;
+    e_first_surnameUpdt.value = selected.first_surname;
+    e_second_surnameUpdt.value = selected.second_surname;
+    ///////////////////////////////////////////////
     e_emailUpdt.value = selected.temployee.email;
     e_telUpdt.value = selected.temployee.telephone;
     u_userUpdt.value = selected.username;
@@ -367,6 +380,13 @@ function seleccionar() {
 
 function updateUser() {
     const url = 'http://localhost:8080/tusersE/update';
+    //////////////////////////////////////////////////////
+    let e_dniUpdt = document.getElementById('e_dniUpdt').value;
+    let e_nombreUpdt = document.getElementById('e_nombreUpdt').value;
+    let e_first_surnameUpdt = document.getElementById('e_first_surnameUpdt').value;
+    let e_second_surnameUpdt = document.getElementById('e_second_surnameUpdt').value;
+
+    ////////////////////////////////////////////////////////
     let e_emailUpdt = document.getElementById('e_emailUpdt').value;
     let e_telUpdt = document.getElementById('e_telUpdt').value;
     let e_departmentUpdt = document.getElementById('e_departmentUpdt').value;
@@ -374,6 +394,12 @@ function updateUser() {
     let u_userUpdt = document.getElementById('u_userUpdt').value;
     let u_passUpdt = document.getElementById('u_passUpdt').value;
     let usuario = selected;
+    /////////////////////////////////////////////////////////
+    usuario.temployee.dni = e_dniUpdt;
+    usuario.temployee.first_name = e_nombreUpdt;
+    usuario.temployee.first_surname = e_first_surnameUpdt;
+    ///////////////////////////////////////////////////////////////
+    usuario.temployee.second_surname = e_second_surnameUpdt;
     usuario.temployee.email = e_emailUpdt;
     usuario.temployee.telephone = e_telUpdt;
     usuario.temployee.tdepartment.departmentName = e_departmentUpdt;
@@ -383,7 +409,7 @@ function updateUser() {
     let data = new FormData();
     data.append('user', JSON.stringify(usuario));
     loadData(url, data, function () {
-        // window.alert("Usuario Actualizado");
+      
         menuUsers();
         
 

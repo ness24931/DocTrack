@@ -386,53 +386,71 @@
                     <div class="container">
 
                         <div class="row justify-content-center">
+                            <!-- --------------------------------------------------------------------- -->
+                            <div class="col -8">
+                                <div class="form-group">
+                                    <label for="e_dniUpdt">Cédula</label>
+                                    <input type="text" class="form-control" id="e_dniUpdt">
+                                </div>
 
-                            <div class="col-8">
                                 <div class="form-group">
-                                    <label for="e_emailUpdt">Correo Electrónico</label>
-                                    <input type="text" class="form-control" id="e_emailUpdt">
+                                    <label for="e_nombreUpdt">Nombre</label>
+                                    <input type="text" class="form-control" id="e_nombreUpdt">
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="e_telUpdt">Teléfono</label>
-                                    <input type="text" class="form-control" id="e_telUpdt">
+                                    <label for="e_first_surnameUpdt">Primer Apellido</label>
+                                    <input type="text" class="form-control" id="e_first_surnameUpdt">
                                 </div>
+
                                 <div class="form-group">
-                                    <select id="e_departmentUpdt">
-                                        <option>Departamento</option>
-                                    </select>
+                                    <label for="e_second_surnameUpdt">Segundo Apellido</label>
+                                    <input type="text" class="form-control" id="e_second_surnameUpdt">
                                 </div>
-                                <div class="form-group">
-                                    <select id="e_positionUpdt">
-                                        <option>Puesto</option>
-                                        <option>Secretario(a)</option>
-                                        <option>Alcalde</option>
-                                        <option>Coordinador(a)</option>
-                                        <option>Oficinista</option>
-                                    </select>
+                                <!-- -------------------------------------------------------------------------- -->
+                                <div class="col -8">
+                                    <div class="form-group">
+                                        <label for="e_emailUpdt">Correo Electrónico</label>
+                                        <input type="text" class="form-control" id="e_emailUpdt">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="e_telUpdt">Teléfono</label>
+                                        <input type="text" class="form-control" id="e_telUpdt">
+                                    </div>
+                                    <div class="form-group">
+                                        <select id="e_departmentUpdt">
+                                            <option>Departamento</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <select id="e_positionUpdt">
+                                            <option>Puesto</option>
+                                            <option>Secretario(a)</option>
+                                            <option>Alcalde</option>
+                                            <option>Coordinador(a)</option>
+                                            <option>Oficinista</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="u_userUpdt">Nombre de Usuario</label>
+                                        <input type="text" class="form-control" id="u_userUpdt">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="u_passUpdt">Contraseña</label>
+                                        <input type="text" id="u_passUpdt" readonly>
+                                        <button type="button" class="btn btn-secondary" class="form-control"
+                                            onclick="genPass('u_passUpdt')">Generar
+                                            Contraseña</button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="u_userUpdt">Nombre de Usuario</label>
-                                    <input type="text" class="form-control" id="u_userUpdt">
-                                </div>
-                                <div class="form-group">
-                                    <label for="u_passUpdt">Contraseña</label>
-                                    <input type="text" id="u_passUpdt" readonly>
-                                    <button type="button" class="btn btn-secondary" class="form-control"
-                                        onclick="genPass('u_passUpdt')">Generar
-                                        Contraseña</button>
-                                </div>
-                                <!-- <div class="col-8 offset-md-2">
-                                  <button id="bntUpdateU" type="button" class="btn btn-primary">Actualizar
-                                      Usuario</button>
-                              </div> -->
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button id="bntUpdateU" type="button" class="btn btn-primary">Actualizar
+                <div class="modal-footer">
+                    <button id="bntUpdateU" type="button" class="btn btn-primary">Actualizar
+                </div>
             </div>
         </div>
     </div>

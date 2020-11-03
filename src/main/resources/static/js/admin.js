@@ -151,7 +151,7 @@ function cargarTablaTramites(tramites) {
 function showMoreRequi(i) {
     let requisitos = listFilterTramites[i].trequirements;
     let bodyTable = document.getElementById('bodyTable_request');
-    bodyTable.innerHTML="";
+    bodyTable.innerHTML = "";
     for (let r of requisitos) {
         let row = bodyTable.insertRow(0);
 
@@ -488,11 +488,12 @@ function requestRequirements() {
 
 function loadRequirements(datos) {
     listRequisitos = datos;
-    let list_req = document.getElementById('list_req');
+    let list_req = document.getElementById('list_req_proc');
     list_req.innerHTML = "";
     // list_req.onclick = loadInfo;
     let option = document.createElement('option');
-    option.innerText = 'Requisitos';
+    option.innerText = 'Lista de Requisitos';
+    option.value = "";
     list_req.appendChild(option);
     let i = 0;
     for (let d of datos) {
@@ -506,13 +507,35 @@ function loadRequirements(datos) {
 
 function addReq() {
     // let panelAlreadyAdd = document.getElementById('panelAlreadyAdd');
-    let i = document.getElementById('list_req').value;
-    reqProc.push(listRequisitos[i]);
-    let panelAlreadyAdd = document.getElementById('panelAlreadyAdd');
-    let li = document.createElement('li');
-    li.innerHTML = `<div><p>${listRequisitos[i].title}</p><span><button type='button' class="btn btn-secondary" onclick="deleteReqProc(${listRequisitos[i].requirementId})">Eliminar</button></span></div>`;
-    li.setAttribute('id', `li_${listRequisitos[i].requirementId}`)
-    panelAlreadyAdd.appendChild(li);
+    // let i = document.getElementById('list_req_proc').selectedIndex;
+    let select = document.getElementById('list_req_proc');
+    if (select.value) {
+        reqProc.push(listRequisitos[select.value]);
+        let tr = document.createElement('tr');
+        let td = document.createElement('td');
+        td.innerText = listRequisitos[select.value].title;
+        let button = document.createElement('button');
+        button.classList.add("btn");
+        button.classList.add("btn-secondary");
+        button.click = `deleteReqProc(${listRequisitos[select.value].requirementId})`;
+        button.innerText = 'Eliminar';
+        tr.appendChild(td);
+        tr.appendChild(button);
+        let tbody = document.getElementById("body_panelAddReq");
+        tbody.appendChild(tr);
+        select.remove(parseInt(select.selectedIndex));
+        document.getElementById('list_req_proc').removeAttribute('required');
+
+        // li.innerHTML = `<div><p>${listRequisitos[i].title}</p><span><button type='button' class="btn btn-secondary" onclick="deleteReqProc(${listRequisitos[i].requirementId})">Eliminar</button></span></div>`;
+        // li.setAttribute('id', `li_${listRequisitos[i].requirementId}`)
+        // panelAlreadyAdd.appendChild(li);
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Debe seleccionar un requisito de la lista de requisitos!'
+        })
+    }
 }
 
 function createProc() {
@@ -520,13 +543,25 @@ function createProc() {
     const url = 'http://localhost:8080/t_requests/insert';
     let title = document.getElementById('title_proc').value;
     let desc = document.getElementById('desc_proc').value;
-    data.append('TRequirements', JSON.stringify(reqProc));
-    data.append('title', title);
-    data.append('description', desc);
-    loadData(url, data, async function () {
-        menuProcess();
-        window.alert("insertado")
-    });
+    if (title.length > 0 && title != undefined && reqProc.length > 0 && desc.length > 0 && desc != undefined) {
+        data.append('TRequirements', JSON.stringify(reqProc));
+        data.append('title', title);
+        data.append('description', desc);
+        loadData(url, data, async function () {
+            menuProcess();
+            window.alert("insertado")
+        });
+    } else {
+        let form = document.getElementById('form_create_proc');
+        form.classList.add('was-validated');
+        if (reqProc.length === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'La lista de requisitos del proceso esta vacía, agregue un requisito...'
+            })
+        }
+    }
 }
 
 function updateProc() {
@@ -536,13 +571,32 @@ function updateProc() {
         const url = 'http://localhost:8080/t_requests/update';
         let data = new FormData();
         data.append('TRequirements', JSON.stringify(listRequisitos));
-        data.append('idprocess',selected.requestId);
+        data.append('idprocess', selected.requestId);
         data.append('title', document.getElementById('title_procUpdt').value);
         data.append('description', document.getElementById('desc_procUdpt').value);
         loadData(url, data, async function () {
             menuProcess();
-            window.alert('Actualizado');            
+            window.alert('Actualizado');
         });
 
     }
+}
+
+function loadInfo() {
+    let select = document.getElementById('list_req_proc');
+    let info = document.getElementById('info_req');
+    info.innerText = listRequisitos[select.value].description;
+}
+
+function clearInputs(nomModal) {
+    document.getElementById("form_create_proc").classList.remove('was-validated');
+    let inputs = Array.from(document.getElementById(nomModal).getElementsByTagName('input'));
+    inputs.filter(i => i.getAttribute('type') === 'text').forEach(e => e.value = "");
+    loadRequirements(listRequisitos);
+    document.getElementById('body_panelAddReq').innerHTML = "";
+    document.getElementById(nomModal).getElementsByTagName('textarea')[0].innerText = "";
+    $("list_req_proc").prop('required',true);
+    reqProc = [];
+
+
 }

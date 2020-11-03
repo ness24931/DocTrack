@@ -30,7 +30,7 @@
                 <a class="active" href="http://localhost:8080/html/view_admin.html">Inicio</a>
                 <a href="#Perfil">Perfil</a>
                 <a href="http://localhost:8080">Cerrar Sesión</a>
-<!-- 
+                <!-- 
                 hola -->
             </div>
         </div>
@@ -312,27 +312,27 @@
                 <form class="form-horizontal"></form>
                 <div class="form-group">
                     <label for="u_dni">Número de cédula</label>
-                    <input type="text" class="form-control" id="e_dni" placeholder="cedula">
+                    <input type="text" class="form-control" id="e_dni">
                 </div>
                 <div class="form-group">
                     <label for="u_name">Nombre</label>
-                    <input type="text" class="form-control" id="e_name" placeholder="nombre">
+                    <input type="text" class="form-control" id="e_name">
                 </div>
                 <div class="form-group">
                     <label for="u_first">Primer Apellido</label>
-                    <input type="text" class="form-control" id="e_first" placeholder="primer apellido">
+                    <input type="text" class="form-control" id="e_first">
                 </div>
                 <div class="form-group">
                     <label for="u_second">Segundo Apellido</label>
-                    <input type="text" class="form-control" id="e_second" placeholder="segundo apellido">
+                    <input type="text" class="form-control" id="e_second">
                 </div>
                 <div class="form-group">
                     <label for="u_email">Correo Electrónico</label>
-                    <input type="text" class="form-control" id="e_email" placeholder="correo electronico">
+                    <input type="text" class="form-control" id="e_email">
                 </div>
                 <div class="form-group">
                     <label for="u_tel">Teléfono</label>
-                    <input type="text" class="form-control" id="e_tel" placeholder="telefono">
+                    <input type="text" class="form-control" id="e_tel">
                 </div>
                 <div class="form-group">
                     <label for="u_deparment">Departamento</label>
@@ -351,14 +351,13 @@
                 </div>
                 <div class="form-group">
                     <label for="u_user">Nombre de Usuario</label>
-                    <input type="text" class="form-control" id="u_user" placeholder="nombre de usuario">
+                    <input type="text" class="form-control" id="u_user">
                 </div>
                 <label for="u_pass">Contraseña</label>
                 <input type="text" id="u_pass" readonly>
-                <button type="button" class="btn btn-secondary" class="form-control" placeholder="Contraseña"
-                    onclick="genPass('u_pass')">Generar
-                    Contraseña</button>
-
+                <button type="button" class="btn btn-secondary" class="form-control" onclick="genPass('u_pass')">
+                    Generar Contraseña
+                </button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -391,12 +390,11 @@
                             <div class="col-8">
                                 <div class="form-group">
                                     <label for="e_emailUpdt">Correo Electrónico</label>
-                                    <input type="text" class="form-control" id="e_emailUpdt"
-                                        placeholder="correo electronico">
+                                    <input type="text" class="form-control" id="e_emailUpdt">
                                 </div>
                                 <div class="form-group">
                                     <label for="e_telUpdt">Teléfono</label>
-                                    <input type="text" class="form-control" id="e_telUpdt" placeholder="telefono">
+                                    <input type="text" class="form-control" id="e_telUpdt">
                                 </div>
                                 <div class="form-group">
                                     <select id="e_departmentUpdt">
@@ -414,14 +412,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="u_userUpdt">Nombre de Usuario</label>
-                                    <input type="text" class="form-control" id="u_userUpdt"
-                                        placeholder="nombre de usuario">
+                                    <input type="text" class="form-control" id="u_userUpdt">
                                 </div>
                                 <div class="form-group">
                                     <label for="u_passUpdt">Contraseña</label>
                                     <input type="text" id="u_passUpdt" readonly>
                                     <button type="button" class="btn btn-secondary" class="form-control"
-                                        onclick="genPass('u_passUpdt')" placeholder="Contraseña">Generar
+                                        onclick="genPass('u_passUpdt')">Generar
                                         Contraseña</button>
                                 </div>
                                 <!-- <div class="col-8 offset-md-2">
@@ -446,56 +443,76 @@
             <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#modal_proc">Crear
                 Proceso</button> -->
 <!-- Modal -->
-<div class="modal fade" id="modal_proc" role="dialog">
+<div class="modal fade" id="modal_proc" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false" tabindex="-1">
     <div class="modal-dialog" role="document">
-
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header" text-center>
-
-                <h4 class="modal-title">Creacion de Trámites</h4>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalLabel">Creacion de Trámites</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
-
-                </form>
-                <form class="form-horizontal"></form>
-
-                <div class="col-6 align-text-center">
-                    <div class="form-group row">
-                        <select id="list_req" class="form-control" onchange="loadInfo()">
-
-                            <option value="-1">Lista de Requisitos</option>
-                        </select>
-                        <button type="button" class="btn btn-secondary" onclick="addReq()">Agregar
-                            Requisito</button>
-                    </div>
-                    <textarea id="info_req" class="form-control" rows="5" cols="50" readonly></textarea>
-                    <div class="form-group row">
-                        <label for="title_proc">Titulo</label>
-                        <input type="text" class="form-control" id="title_proc" placeholder="titulo">
-                    </div>
-                    <div class="form-group row">
-                        <label for="desc_proc">Descripción</label>
-                        <input type="text" class="form-control" id="desc_proc" placeholder="descripcion">
-                        <ul id="panelAlreadyAdd">
-                        </ul>
-                    </div>
+            <div class="modal-body text-center">
+                <div class="container">
+                    <form id="form_create_proc" class="needs-validation" novalidate>
+                        <div class="form-group">
+                            <select id="list_req_proc" class="custom-select browser-default" onchange="loadInfo()"
+                                required>
+                                <option value="">Lista de Requisitos</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Seleccione un requisito de la lista.
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addReq()">
+                                Agregar Requisito
+                            </button>
+                            <textarea id="info_req" class="form-control" rows="5" cols="50" readonly></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="title_proc">Titulo</label>
+                            <input type="text" class="form-control" id="title_proc" required>
+                            <div class="invalid-feedback">
+                                Se debe colocar un título.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc_proc">Descripción</label>
+                            <input type="text" class="form-control" id="desc_proc" required>
+                            <div class="invalid-feedback">
+                                Se debe agregar una descripción.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p>Lista de requisitos del proceso</p>
+                            <table class="table table-bordered" id="panelAlreadyAdd">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">
+                                            Nombre del requisito
+                                        </th>
+                                        <th scope="col">
+                                            ...
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="body_panelAddReq"></tbody>
+                            </table>
+                        </div>
                 </div>
+
+                <button type="button" class="btn btn-success" onclick="createProc()">Crear</button>
+                <!-- </div> -->
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success" onclick="createProc()">Crear</button>
+                <button type="button" class="btn btn-secondary" onclick="clearInputs('modal_proc')">Limpiar
+                    campos</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar ventana</button>
             </div>
-
-
         </div>
     </div>
+</div>
 
-</div>
-</div>
-</div>
 
 <!-- modal updt process -->
 
@@ -537,7 +554,7 @@
 <script src="../js/admin.js"></script>
 <script src="../js/loadHeader.js"></script>
 <script src="../js/getData.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>

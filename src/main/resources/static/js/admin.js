@@ -38,7 +38,7 @@ function loadProcess(datos) {
     listTramites = datos;
     cargarTablaTramites(listTramites);
     requestRequirements();
-    document.getElementById('text_whereIam').innerText = 'Módulo de tramites';
+    document.getElementById('text_whereIam').innerText = '-Módulo de tramites';
     document.getElementById('btn_filter').setAttribute('data-target', '#modal_filter_tramites');
     document.getElementById('btn_insert').setAttribute('data-target', '#modal_proc');
     document.getElementById('btn_updt').setAttribute('data-target', '#updt_proc');
@@ -196,7 +196,7 @@ function menuUsers() {
 function loadUsers(datos) {
     listUsuarios = datos;
     cargarTablaUsers(listUsuarios);
-    document.getElementById('text_whereIam').innerText = 'Módulo de usuarios';
+    document.getElementById('text_whereIam').innerText = '-Módulo de usuarios';
     document.getElementById('btn_filter').setAttribute('data-target', '#modal_filter');
     document.getElementById('btn_insert').setAttribute('data-target', '#modal_Admin');
     document.getElementById('btn_updt').setAttribute('data-target', '#updt_panel');

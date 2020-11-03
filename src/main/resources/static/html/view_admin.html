@@ -13,516 +13,540 @@
     <link rel="stylesheet" href="../css/admin.css" type="text/css">
     <title>Municipalidad de San Pablo</title>
 </head>
-
-<body onload="loadHeader()">
-    <header id="head_user">
-    </header>
-    <nav class="navbar navbar-expand-lg bg-light navbar-light border border-dark" id="navBar_main">
-        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <p id="text_whereIam"></p>
-            <ul class=" nav navbar-nav  mx-auto">
-                <li class="nav-item">
-                    <a id="link_procesos" class="nav-link" href="javascript:;" onclick="openNav(this)">Trámites</a>
-                </li>
-                <li class="nav-item">
-                    <a id="link_requisitos" class="nav-link" href="javascript:;" onclick="openNav(this)">Requisitos</a>
-                </li>
-                <li class="nav-item">
-                    <a id="link_usuarios" class="nav-link" href="javascript:;" onclick="openNav(this)">Usuarios</a>
-                </li>
-                <li class="nav-item">
-                    <a id="link_logout" class="nav-link" href="http://localhost:8080">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container-fluid">
+<header id="head_user">
+    <div class="container-fluid" id="wrapper">
         <div class="row">
-            <div class="col">
-                <div id="div_table">
-                    <table id="tabla" class="table table-striped table-hover">
-                        <thead id="header_table" class="thead-dark">
-                        </thead>
-                        <tbody id="body_table">
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col-2 col-md-2 offset-1" id="divImg">
+
+                <a href="http://localhost:8080/html/view_admin.html"><img src="../img/images.png"
+                        class="img-fluid float-left" alt="Municipalidad Heredia" /></a>
             </div>
-            <div class="col col-2">
-                <!-- control de los modales -->
-                <div id="btn_crud">
-                    <button id="btn_insert" type="button" data-toggle="modal" data-target="#modal_insert">
-                        Ingresar Nuevo
-                    </button>
-                    <button id="btn_updt" type="button" data-toggle="modal" data-target="#modal_updt">
-                        Actualizar Seleccionado
-                    </button>
-                    <button id="btn_delete" type="button" data-toggle="modal" data-target="#modal_delete">
-                        Eliminar Seleccionado
-                    </button>
-                    <!-- class="btn btn-primary"  -->
-                    <button id="btn_filter" type="button" data-toggle="modal" data-target="#modal_filter">
-                        Filtrar Lista
-                    </button>
-                </div>
+            <div class="col-2 col-md-3 col-lg-5">
+                <h3 id="h3">
+                    Municipalidad de San Pablo de Heredia
+                </h3>
+            </div>
+            <div class="topnav">
+                <a class="active" href="http://localhost:8080/html/view_admin.html">Inicio</a>
+                <a href="#Perfil">Perfil</a>
+                <a href="http://localhost:8080">Cerrar Sesión</a>
+<!-- 
+                hola -->
+            </div>
+        </div>
+    </div>>
+</header>
+<nav class="navbar navbar-expand-lg bg-light navbar-light border border-dark" id="navBar_main">
+    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <p id="text_whereIam"></p>
+        <ul class=" nav navbar-nav  mx-auto">
+            <li class="nav-item">
+                <a id="link_procesos" class="nav-link" href="javascript:;" onclick="openNav(this)">Trámites</a>
+            </li>
+            <li class="nav-item">
+                <a id="link_requisitos" class="nav-link" href="javascript:;" onclick="openNav(this)">Requisitos</a>
+            </li>
+            <li class="nav-item">
+                <a id="link_usuarios" class="nav-link" href="javascript:;" onclick="openNav(this)">Usuarios</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div id="div_table">
+                <table id="tabla" class="table table-striped table-hover">
+                    <thead id="header_table" class="thead-dark">
+                    </thead>
+                    <tbody id="body_table">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col col-2">
+            <!-- control de los modales -->
+            <div id="btn_crud">
+                <button id="btn_insert" type="button" class="btn btn-secondary" data-toggle="modal"
+                    data-target="#modal_insert">
+                    Ingresar Nuevo
+                </button>
+                <button id="btn_updt" type="button" class="btn btn-secondary" data-toggle="modal"
+                    data-target="#modal_updt">
+                    Actualizar Seleccionado
+                </button>
+                <button id="btn_delete" type="button" class="btn btn-secondary" data-toggle="modal"
+                    data-target="#modal_delete">
+                    Eliminar Seleccionado
+                </button>
+                <!-- class="btn btn-primary"  -->
+                <button id="btn_filter" type="button" class="btn btn-secondary" data-toggle="modal"
+                    data-target="#modal_filter">
+                    Filtrar Lista
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modal filtrar usuarios-->
-    <div class="modal" id="modal_filter">
-        <div class="modal-dialog">
-            <div class="modal-content">
+<!-- Modal filtrar usuarios-->
+<div class="modal" id="modal_filter">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Filtrar Usuarios por:</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <table class="table" id="tabla_filter">
-                        <tr>
-                            <th scope="row">
-                                <label for="filter_dni">Número de cédula</label>
-                            </th>
-                            <td>
-                                <input type="text" name="filter_dni" id="filter_dni">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="filter_name">Nombre</label>
-                            </th>
-                            <td>
-                                <input type="text" name="filter_name" id="filter_name">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="filter_depa">Nombre de departamento</label>
-                            </th>
-                            <td>
-                                <input type="text" name="filter_depa" id="filter_depa">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="filter_rol">Tipo de rol</label>
-                            </th>
-                            <td>
-                                <input type="text" name="filter_rol" id="filter_rol">
-                            </td>
-                        </tr>
-                    </table>
-                    <span class="span_filter">
-                        <button type="button" onclick="loadFilter()">Filtrar</button>
-                    </span>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                </div>
-
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Filtrar Usuarios por:</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table" id="tabla_filter">
+                    <tr>
+                        <th scope="row">
+                            <label for="filter_dni">Número de cédula</label>
+                        </th>
+                        <td>
+                            <input type="text" name="filter_dni" id="filter_dni">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="filter_name">Nombre</label>
+                        </th>
+                        <td>
+                            <input type="text" name="filter_name" id="filter_name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="filter_depa">Nombre de departamento</label>
+                        </th>
+                        <td>
+                            <input type="text" name="filter_depa" id="filter_depa">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="filter_rol">Tipo de rol</label>
+                        </th>
+                        <td>
+                            <input type="text" name="filter_rol" id="filter_rol">
+                        </td>
+                    </tr>
+                </table>
+                <span class="span_filter">
+                    <button type="button" onclick="loadFilter()">Filtrar</button>
+                </span>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+
         </div>
     </div>
+</div>
 
-    <!-- Modal filtrar procesos-->
-    <div class="modal" id="modal_filter_tramites">
-        <div class="modal-dialog">
-            <div class="modal-content">
+<!-- Modal filtrar procesos-->
+<div class="modal" id="modal_filter_tramites">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Filtrar Trámites por:</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <table class="table" id="tabla_filterProcess">
-                        <tr>
-                            <th scope="row">
-                                <label for="filter_dni">Número de trámite</label>
-                            </th>
-                            <td>
-                                <input type="text" name="filter_idProcess" id="filter_numProcess">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="filter_name">Nombre de trámite</label>
-                            </th>
-                            <td>
-                                <input type="text" name="filter_nameProcess" id="filter_nameProcess">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="filter_depa">Descripción del trámite</label>
-                            </th>
-                            <td>
-                                <input type="text" name="filter_descProcess" id="filter_descProcess">
-                            </td>
-                        </tr>
-                    </table>
-                    <span class="span_filter">
-                        <button type="button" onclick="loadFilterProcess()">Filtrar</button>
-                    </span>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                </div>
-
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Filtrar Trámites por:</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table" id="tabla_filterProcess">
+                    <tr>
+                        <th scope="row">
+                            <label for="filter_dni">Número de trámite</label>
+                        </th>
+                        <td>
+                            <input type="text" name="filter_idProcess" id="filter_numProcess">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="filter_name">Nombre de trámite</label>
+                        </th>
+                        <td>
+                            <input type="text" name="filter_nameProcess" id="filter_nameProcess">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="filter_depa">Descripción del trámite</label>
+                        </th>
+                        <td>
+                            <input type="text" name="filter_descProcess" id="filter_descProcess">
+                        </td>
+                    </tr>
+                </table>
+                <span class="span_filter">
+                    <button type="button" onclick="loadFilterProcess()">Filtrar</button>
+                </span>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+
         </div>
     </div>
+</div>
 
 
 
 
 
 
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_viewMore">
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_viewMore">
         Open modal
     </button> -->
 
-    <!-- The Modal view more of users-->
-    <div class="modal" id="modal_viewMore">
-        <div class="modal-dialog">
-            <div class="modal-content">
+<!-- The Modal view more of users-->
+<div class="modal" id="modal_viewMore">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Más Información</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Más Información</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <table id="table_viewMore">
-                        <tr>
-                            <th scope="row">Nombre de usuario</th>
-                            <td id="td_username">
-                                </th>
-                        </tr>
-                        <tr>
-                            <th scope="row">Contraseña</th>
-                            <td id="td_pass">
-                                </th>
-                        </tr>
-                        <tr>
-                            <th scope="row">Rol</th>
-                            <td id="td_role">
-                                </th>
-                        </tr>
-                        <tr>
-                            <th scope="row">Estado</th>
-                            <td id="td_status">
-                                </th>
-                        </tr>
-                    </table>
-                </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table id="table_viewMore">
+                    <tr>
+                        <th scope="row">Nombre de usuario</th>
+                        <td id="td_username">
+                            </th>
+                    </tr>
+                    <tr>
+                        <th scope="row">Contraseña</th>
+                        <td id="td_pass">
+                            </th>
+                    </tr>
+                    <tr>
+                        <th scope="row">Rol</th>
+                        <td id="td_role">
+                            </th>
+                    </tr>
+                    <tr>
+                        <th scope="row">Estado</th>
+                        <td id="td_status">
+                            </th>
+                    </tr>
+                </table>
+            </div>
 
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
 
+        </div>
+    </div>
+</div>
+<!-- Modal view requisitos  -->
+<div class="modal" id="modal_viewMoreRequi">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Requisitos</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table">
+                    <thead id="thead_tramites" class="thead-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyTable_request">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
-    <!-- Modal view requisitos  -->
-    <div class="modal" id="modal_viewMoreRequi">
-        <div class="modal-dialog">
-            <div class="modal-content">
+</div>
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Requisitos</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
+<!-- modal create user -->
+<div class="modal fade" id="modal_Admin" role="dialog">
+    <div class="modal-dialog" role="document">
 
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <table class="table">
-                        <thead id="thead_tramites" class="thead-dark">
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripción</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bodyTable_request">
-                        </tbody>
-                    </table>
-                </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" text-center>
 
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                </div>
+                <h4 class="modal-title">Creacion de Ususarios</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-        </div>
-    </div>
+            <div class="modal-body">
 
-    <!-- modal create user -->
-    <div class="modal fade" id="modal_Admin" role="dialog">
-        <div class="modal-dialog" role="document">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header" text-center>
-
-                    <h4 class="modal-title">Creacion de Ususarios</h4>
+                </form>
+                <form class="form-horizontal"></form>
+                <div class="form-group">
+                    <label for="u_dni">Número de cédula</label>
+                    <input type="text" class="form-control" id="e_dni" placeholder="cedula">
                 </div>
-                <div class="modal-body">
-
-                    </form>
-                    <form class="form-horizontal"></form>
-                    <div class="form-group">
-                        <label for="u_dni">Número de cédula</label>
-                        <input type="text" class="form-control" id="e_dni" placeholder="cedula">
-                    </div>
-                    <div class="form-group">
-                        <label for="u_name">Nombre</label>
-                        <input type="text" class="form-control" id="e_name" placeholder="nombre">
-                    </div>
-                    <div class="form-group">
-                        <label for="u_first">Primer Apellido</label>
-                        <input type="text" class="form-control" id="e_first" placeholder="primer apellido">
-                    </div>
-                    <div class="form-group">
-                        <label for="u_second">Segundo Apellido</label>
-                        <input type="text" class="form-control" id="e_second" placeholder="segundo apellido">
-                    </div>
-                    <div class="form-group">
-                        <label for="u_email">Correo Electrónico</label>
-                        <input type="text" class="form-control" id="e_email" placeholder="correo electronico">
-                    </div>
-                    <div class="form-group">
-                        <label for="u_tel">Teléfono</label>
-                        <input type="text" class="form-control" id="e_tel" placeholder="telefono">
-                    </div>
-                    <div class="form-group">
-                        <label for="u_deparment">Departamento</label>
-                        <select id="e_department" class="form-control form-control-sm">
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="u_position">Puesto</label>
-                        <select id="e_position" class="form-control form-control-sm">
-                            <option value="1">Puesto</option>
-                            <option value="2">Secretario(a)</option>
-                            <option value="3">Alcalde</option>
-                            <option value="4">Coordinador(a)</option>
-                            <option value="5">Oficinista</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="u_user">Nombre de Usuario</label>
-                        <input type="text" class="form-control" id="u_user" placeholder="nombre de usuario">
-                    </div>
-                    <label for="u_pass">Contraseña</label>
-                    <input type="text" id="u_pass" readonly>
-                    <button type="button" class="btn btn-secondary" class="form-control" placeholder="Contraseña"
-                        onclick="genPass('u_pass')">Generar
-                        Contraseña</button>
-
-                    </form>
+                <div class="form-group">
+                    <label for="u_name">Nombre</label>
+                    <input type="text" class="form-control" id="e_name" placeholder="nombre">
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" onclick="addEmployee()">Crear Usuario</button>
-
+                <div class="form-group">
+                    <label for="u_first">Primer Apellido</label>
+                    <input type="text" class="form-control" id="e_first" placeholder="primer apellido">
                 </div>
+                <div class="form-group">
+                    <label for="u_second">Segundo Apellido</label>
+                    <input type="text" class="form-control" id="e_second" placeholder="segundo apellido">
+                </div>
+                <div class="form-group">
+                    <label for="u_email">Correo Electrónico</label>
+                    <input type="text" class="form-control" id="e_email" placeholder="correo electronico">
+                </div>
+                <div class="form-group">
+                    <label for="u_tel">Teléfono</label>
+                    <input type="text" class="form-control" id="e_tel" placeholder="telefono">
+                </div>
+                <div class="form-group">
+                    <label for="u_deparment">Departamento</label>
+                    <select id="e_department" class="form-control form-control-sm">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="u_position">Puesto</label>
+                    <select id="e_position" class="form-control form-control-sm">
+                        <option value="1">Puesto</option>
+                        <option value="2">Secretario(a)</option>
+                        <option value="3">Alcalde</option>
+                        <option value="4">Coordinador(a)</option>
+                        <option value="5">Oficinista</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="u_user">Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="u_user" placeholder="nombre de usuario">
+                </div>
+                <label for="u_pass">Contraseña</label>
+                <input type="text" id="u_pass" readonly>
+                <button type="button" class="btn btn-secondary" class="form-control" placeholder="Contraseña"
+                    onclick="genPass('u_pass')">Generar
+                    Contraseña</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" onclick="addEmployee()">Crear Usuario</button>
 
             </div>
+
         </div>
     </div>
+</div>
 
-    <!-- Modal updt user-->
-    <div class="modal fade" id="updt_panel" tabindex="-1" role="dialog" aria-labelledby="updt_panel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updt_panel">Actualizar Usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="updt_panel" class="row justify-content-center">
-                        <div class="container">
+<!-- Modal updt user-->
+<div class="modal fade" id="updt_panel" tabindex="-1" role="dialog" aria-labelledby="updt_panel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updt_panel">Actualizar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
 
-                            <div class="row justify-content-center">
+            </div>
+            <div class="modal-body">
+                <div id="updt_panel" class="row justify-content-center">
+                    <div class="container">
 
-                                <div class="col-8">
-                                    <div class="form-group">
-                                        <label for="e_emailUpdt">Correo Electrónico</label>
-                                        <input type="text" class="form-control" id="e_emailUpdt"
-                                            placeholder="correo electronico">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="e_telUpdt">Teléfono</label>
-                                        <input type="text" class="form-control" id="e_telUpdt" placeholder="telefono">
-                                    </div>
-                                    <div class="form-group">
-                                        <select id="e_departmentUpdt">
-                                            <option>Departamento</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <select id="e_positionUpdt">
-                                            <option>Puesto</option>
-                                            <option>Secretario(a)</option>
-                                            <option>Alcalde</option>
-                                            <option>Coordinador(a)</option>
-                                            <option>Oficinista</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="u_userUpdt">Nombre de Usuario</label>
-                                        <input type="text" class="form-control" id="u_userUpdt"
-                                            placeholder="nombre de usuario">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="u_passUpdt">Contraseña</label>
-                                        <input type="text" id="u_passUpdt" readonly>
-                                        <button type="button" class="btn btn-secondary" class="form-control"
-                                            onclick="genPass('u_passUpdt')" placeholder="Contraseña">Generar
-                                            Contraseña</button>
-                                    </div>
-                                    <!-- <div class="col-8 offset-md-2">
+                        <div class="row justify-content-center">
+
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label for="e_emailUpdt">Correo Electrónico</label>
+                                    <input type="text" class="form-control" id="e_emailUpdt"
+                                        placeholder="correo electronico">
+                                </div>
+                                <div class="form-group">
+                                    <label for="e_telUpdt">Teléfono</label>
+                                    <input type="text" class="form-control" id="e_telUpdt" placeholder="telefono">
+                                </div>
+                                <div class="form-group">
+                                    <select id="e_departmentUpdt">
+                                        <option>Departamento</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select id="e_positionUpdt">
+                                        <option>Puesto</option>
+                                        <option>Secretario(a)</option>
+                                        <option>Alcalde</option>
+                                        <option>Coordinador(a)</option>
+                                        <option>Oficinista</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="u_userUpdt">Nombre de Usuario</label>
+                                    <input type="text" class="form-control" id="u_userUpdt"
+                                        placeholder="nombre de usuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="u_passUpdt">Contraseña</label>
+                                    <input type="text" id="u_passUpdt" readonly>
+                                    <button type="button" class="btn btn-secondary" class="form-control"
+                                        onclick="genPass('u_passUpdt')" placeholder="Contraseña">Generar
+                                        Contraseña</button>
+                                </div>
+                                <!-- <div class="col-8 offset-md-2">
                                   <button id="bntUpdateU" type="button" class="btn btn-primary">Actualizar
                                       Usuario</button>
                               </div> -->
-                                </div>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button id="bntUpdateU" type="button" class="btn btn-primary">Actualizar
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="bntUpdateU" type="button" class="btn btn-primary">Actualizar
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Trigger the modal with a button -->
-    <!-- <div class="crea_proc">
+<!-- Trigger the modal with a button -->
+<!-- <div class="crea_proc">
             <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#modal_proc">Crear
                 Proceso</button> -->
-    <!-- Modal -->
-    <div class="modal fade" id="modal_proc" role="dialog">
-        <div class="modal-dialog" role="document">
+<!-- Modal -->
+<div class="modal fade" id="modal_proc" role="dialog">
+    <div class="modal-dialog" role="document">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header" text-center>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" text-center>
 
-                    <h4 class="modal-title">Creacion de Trámites</h4>
-                </div>
-                <div class="modal-body">
-
-                    </form>
-                    <form class="form-horizontal"></form>
-
-                    <div class="col-6 align-text-center">
-                        <div class="form-group row">
-                            <select id="list_req" class="form-control" onchange="loadInfo()">
-
-                                <option value="-1">Lista de Requisitos</option>
-                            </select>
-                            <button type="button" class="btn btn-secondary" onclick="addReq()">Agregar
-                                Requisito</button>
-                        </div>
-                        <textarea id="info_req" class="form-control" rows="5" cols="50" readonly></textarea>
-                        <div class="form-group row">
-                            <label for="title_proc">Titulo</label>
-                            <input type="text" class="form-control" id="title_proc" placeholder="titulo">
-                        </div>
-                        <div class="form-group row">
-                            <label for="desc_proc">Descripción</label>
-                            <input type="text" class="form-control" id="desc_proc" placeholder="descripcion">
-                            <ul id="panelAlreadyAdd">
-                            </ul>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" onclick="createProc()">Crear</button>
-                </div>
-
-
+                <h4 class="modal-title">Creacion de Trámites</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-        </div>
+            <div class="modal-body">
 
-    </div>
-    </div>
-    </div>
+                </form>
+                <form class="form-horizontal"></form>
 
-    <!-- modal updt process -->
+                <div class="col-6 align-text-center">
+                    <div class="form-group row">
+                        <select id="list_req" class="form-control" onchange="loadInfo()">
 
-    <div class="modal fade" id="updt_proc" tabindex="-1" role="dialog" aria-labelledby="updt_proc" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updt_proc">Actualizacion de Tramites </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                            <option value="-1">Lista de Requisitos</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" onclick="addReq()">Agregar
+                            Requisito</button>
+                    </div>
+                    <textarea id="info_req" class="form-control" rows="5" cols="50" readonly></textarea>
+                    <div class="form-group row">
+                        <label for="title_proc">Titulo</label>
+                        <input type="text" class="form-control" id="title_proc" placeholder="titulo">
+                    </div>
+                    <div class="form-group row">
+                        <label for="desc_proc">Descripción</label>
+                        <input type="text" class="form-control" id="desc_proc" placeholder="descripcion">
+                        <ul id="panelAlreadyAdd">
+                        </ul>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div>
-                        <!-- <select id="list_reqUpdt">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" onclick="createProc()">Crear</button>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+<!-- modal updt process -->
+
+<div class="modal fade" id="updt_proc" tabindex="-1" role="dialog" aria-labelledby="updt_proc" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updt_proc">Actualizacion de Tramites </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <!-- <select id="list_reqUpdt">
                       <option value="-1">Lista de Requisitos</option>
                   </select> -->
 
-                        <div class="form-group">
-                            <label for="title_procUpdt">Titulo</label>
-                            <textarea class="form-control rounded-0" id="title_procUpdt" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="desc_procUdpt">Descripción</label>
-                            <textarea class="form-control rounded-0" id="desc_procUdpt" rows="3"></textarea>
-                        </div>                        
+                    <div class="form-group">
+                        <label for="title_procUpdt">Titulo</label>
+                        <textarea class="form-control rounded-0" id="title_procUpdt" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc_procUdpt">Descripción</label>
+                        <textarea class="form-control rounded-0" id="desc_procUdpt" rows="3"></textarea>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="updateProc()">Actualizar</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="updateProc()">Actualizar</button>
             </div>
         </div>
     </div>
+</div>
 
 
 
-    <!-- <script src="../js/main_user.js"></script> -->
-    <script src="../js/admin.js"></script>
-    <script src="../js/loadHeader.js"></script>
-    <script src="../js/getData.js"></script>
+<!-- <script src="../js/main_user.js"></script> -->
+<script src="../js/admin.js"></script>
+<script src="../js/loadHeader.js"></script>
+<script src="../js/getData.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
-        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
-        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+    integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

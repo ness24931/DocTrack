@@ -60,14 +60,19 @@
   position: relative;
   background-color: #02315f !important;
 }
-
+.topnav{
+  transition: margin-left 0.3s;
+  padding: 5px;
+  float: right;
+ color:black;
+}
 #main_area {
   transition: margin-left 0.3s;
   padding: 5px;
 }
 
 .nav-link {
-  color: white !important;
+  color:white !important;
   font-weight: bolder !important;
   font-size: 1.2em !important;
   text-align: center !important;

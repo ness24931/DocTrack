@@ -1,9 +1,8 @@
 #header_table {
   background-color: darkgray;
 }
-#head_user{
-
-  color:black;
+#head_user {
+  color: black;
 }
 
 #tabla {
@@ -17,7 +16,8 @@
   margin-top: 20px;
 }
 
-#header_table > tr > th, #thead_tramites > tr> th{
+#header_table > tr > th,
+#thead_tramites > tr > th {
   /* font-weight: bolder; */
   position: sticky;
   top: 0;
@@ -39,7 +39,7 @@ tbody > tr:hover {
   text-align: center;
 }
 
-#btn_crud{
+#btn_crud {
   background-color: #02315f;
   padding: 50px;
   text-align: center;
@@ -48,12 +48,22 @@ tbody > tr:hover {
   height: 410px;
 }
 
-#btn_crud>button{
+#btn_crud > button {
   margin-bottom: 10px;
   margin-top: 10px;
 }
 
-#text_whereIam{
-  color:white;
-  font-size: 2vw ;
+#text_whereIam {
+  color: white;
+  font-size: 2vw;
+}
+
+.top_nav {
+  text-align: end;
+  margin-top: 72px;
+}
+
+.navbar-nav {
+  margin-right: 0px !important;
+  padding-right: 50px;
 }

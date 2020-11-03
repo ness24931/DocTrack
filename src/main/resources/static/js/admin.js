@@ -383,8 +383,12 @@ function updateUser() {
     let data = new FormData();
     data.append('user', JSON.stringify(usuario));
     loadData(url, data, function () {
-        window.alert("Usuario Actualizado");
+        // window.alert("Usuario Actualizado");
         menuUsers();
+        Swal.fire({
+            icon: 'success',
+            title: 'Actualizado'
+        })
     });
 }
 
@@ -595,7 +599,7 @@ function clearInputs(nomModal) {
     loadRequirements(listRequisitos);
     document.getElementById('body_panelAddReq').innerHTML = "";
     document.getElementById(nomModal).getElementsByTagName('textarea')[0].innerText = "";
-    $("list_req_proc").prop('required',true);
+    $("list_req_proc").prop('required', true);
     reqProc = [];
 
 

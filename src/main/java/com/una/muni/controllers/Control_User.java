@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.una.muni.model.TEmployee;
 import com.una.muni.model.TJob;
@@ -74,9 +76,16 @@ public class Control_User {
 
 		u.setTEmployee(emplo);
 
-		repoE.save(u.getTEmployee());
-		repo.save(u);
-		return o.put("status", "ok").toString();
+		if (repo.existsById(u.getUsername())) {
+			System.out.println("si entro al error");
+			throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
+		} else {
+			System.out.println("si entro al else del error");
+			repoE.save(u.getTEmployee());
+			repo.save(u);
+			o.put("status", "ok");
+		}
+		return o.toString();
 	}
 
 	@RequestMapping(value = "listar", method = RequestMethod.POST)
@@ -88,9 +97,9 @@ public class Control_User {
 	}
 
 	@RequestMapping(value = "find", method = RequestMethod.POST)
-	public TUser findUser(@RequestParam(name = "username")String username) {
+	public TUser findUser(@RequestParam(name = "username") String username) {
 		Optional<TUser> user = repo.findById(username);
-		if(user.isPresent()){
+		if (user.isPresent()) {
 			return user.get();
 		}
 		return null;

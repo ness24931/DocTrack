@@ -534,33 +534,71 @@
 
 <!-- modal updt process -->
 
-<div class="modal fade" id="updt_proc" tabindex="-1" role="dialog" aria-labelledby="updt_proc" aria-hidden="true">
+<div class="modal fade" id="modal_procUpdt" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false" tabindex="-1">
     <div class="modal-dialog" role="document">
+        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updt_proc">Actualizacion de Tramites </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h4 class="modal-title" id="modalLabel">Actualizar Trámites</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
-                <div>
-                    <!-- <select id="list_reqUpdt">
-                      <option value="-1">Lista de Requisitos</option>
-                  </select> -->
-
-                    <div class="form-group">
-                        <label for="title_procUpdt">Titulo</label>
-                        <textarea class="form-control rounded-0" id="title_procUpdt" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="desc_procUdpt">Descripción</label>
-                        <textarea class="form-control rounded-0" id="desc_procUdpt" rows="3"></textarea>
-                    </div>
+            <div class="modal-body text-center">
+                <div class="container">
+                    <form id="form_create_procU" class="needs-validation" novalidate>
+                        <div class="form-group">
+                            <select id="list_req_procU" class="custom-select browser-default" onchange="loadInfo('list_req_procU')"
+                                required>
+                                <option value="">Lista de Requisitos</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Seleccione un requisito de la lista.
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addReq('body_panelAddReqU')">
+                                Agregar Requisito
+                            </button>
+                            <textarea id="info_reqU" class="form-control" rows="5" cols="50" readonly></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="title_proc">Titulo</label>
+                            <input type="text" class="form-control" id="title_procU" required>
+                            <div class="invalid-feedback">
+                                Se debe colocar un título.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc_proc">Descripción</label>
+                            <input type="text" class="form-control" id="desc_procU" required>
+                            <div class="invalid-feedback">
+                                Se debe agregar una descripción.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p>Lista de requisitos del proceso</p>
+                            <table class="table table-bordered" id="panelAlreadyAdd">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">
+                                            Nombre del requisito
+                                        </th>
+                                        <th scope="col">
+                                            ...
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="body_panelAddReqU"></tbody>
+                            </table>
+                        </div>
                 </div>
+
+                <button type="button" class="btn btn-success" onclick="updateProc()">Actualizar</button>
+                <!-- </div> -->
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="updateProc()">Actualizar</button>
+                <button type="button" class="btn btn-secondary" onclick="clearInputs('modal_procUpdt')">Limpiar
+                    campos</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar ventana</button>
             </div>
         </div>
     </div>

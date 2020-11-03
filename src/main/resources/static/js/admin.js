@@ -10,8 +10,11 @@ var reqProc = [];
 var list_request = [];
 var prod = null;
 var selected = null;
+var selectedUser = null;
 
 function openNav(element) {
+    selected = null;
+    selectedUser = null;
     switch (element.id) {
         case "link_procesos":
             menuProcess();
@@ -41,13 +44,44 @@ function loadProcess(datos) {
     document.getElementById('text_whereIam').innerText = '·Módulo de tramites·';
     document.getElementById('btn_filter').setAttribute('data-target', '#modal_filter_tramites');
     document.getElementById('btn_insert').setAttribute('data-target', '#modal_proc');
-    document.getElementById('btn_updt').setAttribute('data-target', '#updt_proc');
+    document.getElementById('btn_updt').setAttribute('data-target', '#modal_procUpdt');
     document.getElementById('btn_updt').addEventListener('click', function () {
         seleccionarProc();
     });
 
     document.getElementById('btn_crud').style.display = 'block';
 }
+
+function seleccionarProc() {
+    if (selected) {
+        let body = document.getElementById('body_panelAddReqU');
+        let sel = document.getElementById('list_req_procU');
+        reqProc = [];
+        let req = selected.trequirements;
+        body.innerHTML = "";
+        document.getElementById('title_procU').value = selected.title;
+        document.getElementById('desc_procU').value = selected.description;
+        for (let r of req) {
+            reqProc.push(r);
+            let tr = document.createElement('tr');
+            let td = document.createElement('td');
+            td.innerText = r.title;
+            let button = document.createElement('button');
+            button.classList.add("btn");
+            button.classList.add("btn-secondary");
+            button.click = `deleteReqProc(${r.requirementId})`;
+            button.innerText = 'Eliminar';
+            tr.appendChild(td);
+            tr.appendChild(button);
+            body.appendChild(tr);
+            sel.remove(1 + (listRequisitos.findIndex(e => e.requirementId === r.requirementId)));
+            // document.getElementById('list_req_proc').removeAttribute('required');
+        }
+    } else {
+        console.log("no sirvio");
+    }
+}
+
 
 
 function cargarTablaTramites(tramites) {
@@ -339,18 +373,47 @@ function selectRow(i) {
     let row = body_table.rows[pos];
     row.style.backgroundColor = "#02315f";
     row.style.color = "white";
-    selected = listUsuarios[i];
+    if ($("#btn_updt").attr('data-target') === '#updt_panel') {
+        selectedUser = listUsuarios[i];                
+        document.getElementById('e_dniUpdt').value = selectedUser.temployee.dni;
+        document.getElementById('e_nombreUpdt').value =selectedUser.temployee.firstName;
+        document.getElementById('e_first_surnameUpdt').value=selectedUser.temployee.firstSurname;
+        document.getElementById('e_second_surnameUpdt').value=selectedUser.temployee.secondSurname;
+
+        ////////////////////////////////////////////////////////
+        document.getElementById('e_emailUpdt').value=selectedUser.temployee.email;
+        document.getElementById('e_telUpdt').value=selectedUser.temployee.telephone;
+        document.getElementById('e_departmentUpdt').value;
+        document.getElementById('e_positionUpdt').value;
+        document.getElementById('u_userUpdt').value;
+        document.getElementById('u_passUpdt').value;
+        let usuario = selected;
+        /////////////////////////////////////////////////////////
+        usuario.temployee.dni = e_dniUpdt;
+        usuario.temployee.first_name = e_nombreUpdt;
+        usuario.temployee.first_surname = e_first_surnameUpdt;
+        ///////////////////////////////////////////////////////////////
+        usuario.temployee.second_surname = e_second_surnameUpdt;
+        usuario.temployee.email = e_emailUpdt;
+        usuario.temployee.telephone = e_telUpdt;
+        usuario.temployee.tdepartment.departmentName = e_departmentUpdt;
+        usuario.temployee.tjob.jobTitle = e_positionUpdt;
+        usuario.username = u_userUpdt;
+        usuario.passwd = u_passUpdt;
+    } else {
+        selected = listTramites[i];
+    }
 }
 
 function seleccionar() {
     requestDepartments();
     loadDepartments(listDepartments, 'e_departmentUpdt');
-///////////////////////////////////////////////////////////////////
-let e_dniUpdt = document.getElementById('e_dniUpdt');
-let e_nombreUpdt = document.getElementById('e_nombreUpdt');
-let e_first_surnameUpdt = document.getElementById('e_first_surnameUpdt');
-let e_second_surnameUpdt = document.getElementById('e_second_surnameUpdt');
-/////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
+    let e_dniUpdt = document.getElementById('e_dniUpdt');
+    let e_nombreUpdt = document.getElementById('e_nombreUpdt');
+    let e_first_surnameUpdt = document.getElementById('e_first_surnameUpdt');
+    let e_second_surnameUpdt = document.getElementById('e_second_surnameUpdt');
+    /////////////////////////////////////////////////////////////
 
 
     let e_emailUpdt = document.getElementById('e_emailUpdt');
@@ -409,24 +472,24 @@ function updateUser() {
     let data = new FormData();
     data.append('user', JSON.stringify(usuario));
     loadData(url, data, function () {
-      
-        menuUsers();
-        
 
-Swal.fire({
-    title: '¿Desea actualizar el usuario?',
-    showDenyButton: true,
-    showCancelButton: true,
-    confirmButtonText: `Actualizar`,
-    denyButtonText: `NO Actualizar`,
-  }).then((result) => {
-    /* Read more about isConfirmed, isDenied below */
-    if (result.isConfirmed) {
-      Swal.fire('Actualizado!', '', 'success')
-    } else if (result.isDenied) {
-      Swal.fire('No se Actualizo el usuario', '', 'info')
-    }
-  })
+        menuUsers();
+
+
+        Swal.fire({
+            title: '¿Desea actualizar el usuario?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Actualizar`,
+            denyButtonText: `NO Actualizar`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Actualizado!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('No se Actualizo el usuario', '', 'info')
+            }
+        })
 
 
 
@@ -539,41 +602,51 @@ function requestRequirements() {
 function loadRequirements(datos) {
     listRequisitos = datos;
     let list_req = document.getElementById('list_req_proc');
+    let list_reqU = document.getElementById('list_req_procU');
     list_req.innerHTML = "";
+    list_reqU.innerHTML = "";
     // list_req.onclick = loadInfo;
     let option = document.createElement('option');
     option.innerText = 'Lista de Requisitos';
     option.value = "";
     list_req.appendChild(option);
+    option = document.createElement('option');
+    option.innerText = 'Lista de Requisitos';
+    option.value = "";
+    list_reqU.appendChild(option);
     let i = 0;
     for (let d of datos) {
         option = document.createElement('option');
         option.innerText = d.title;
         option.value = i;
         list_req.appendChild(option);
+        option = document.createElement('option');
+        option.innerText = d.title;
+        option.value = i;
+        list_reqU.appendChild(option);
         i++;
     }
 }
 
-function addReq() {
+function addReq(select = 'list_req_proc') {
     // let panelAlreadyAdd = document.getElementById('panelAlreadyAdd');
     // let i = document.getElementById('list_req_proc').selectedIndex;
-    let select = document.getElementById('list_req_proc');
-    if (select.value) {
-        reqProc.push(listRequisitos[select.value]);
+    let s = document.getElementById(select);
+    if (s.value) {
+        reqProc.push(listRequisitos[s.value]);
         let tr = document.createElement('tr');
         let td = document.createElement('td');
-        td.innerText = listRequisitos[select.value].title;
+        td.innerText = listRequisitos[s.value].title;
         let button = document.createElement('button');
         button.classList.add("btn");
         button.classList.add("btn-secondary");
-        button.click = `deleteReqProc(${listRequisitos[select.value].requirementId})`;
+        button.click = `deleteReqProc(${listRequisitos[s.value].requirementId})`;
         button.innerText = 'Eliminar';
         tr.appendChild(td);
         tr.appendChild(button);
         let tbody = document.getElementById("body_panelAddReq");
         tbody.appendChild(tr);
-        select.remove(parseInt(select.selectedIndex));
+        s.remove(parseInt(s.selectedIndex));
         document.getElementById('list_req_proc').removeAttribute('required');
 
         // li.innerHTML = `<div><p>${listRequisitos[i].title}</p><span><button type='button' class="btn btn-secondary" onclick="deleteReqProc(${listRequisitos[i].requirementId})">Eliminar</button></span></div>`;
@@ -640,21 +713,44 @@ function updateProc() {
     }
 }
 
-function loadInfo() {
-    let select = document.getElementById('list_req_proc');
-    let info = document.getElementById('info_req');
-    info.innerText = listRequisitos[select.value].description;
+function loadInfo(select = 'list_req_proc') {
+    let s = document.getElementById(select);
+    let info;
+    if (select.includes("U")) {
+        info = document.getElementById('info_reqU');
+    } else {
+        info = document.getElementById('info_req');
+    }
+    info.innerText = listRequisitos[s.value].description;
 }
 
 function clearInputs(nomModal) {
-    document.getElementById("form_create_proc").classList.remove('was-validated');
+    let bodypanel = 'body_panelAddReq';
+    let formname = "form_create_proc";
+    let selec = "list_req_proc";
+    if (nomModal === 'modal_procUpdt') {
+        bodypanel = 'body_panelAddReqU';
+        formname = "form_create_procU";
+        selec = "list_req_procU";
+    }
+    document.getElementById(formname).classList.remove('was-validated');
     let inputs = Array.from(document.getElementById(nomModal).getElementsByTagName('input'));
     inputs.filter(i => i.getAttribute('type') === 'text').forEach(e => e.value = "");
     loadRequirements(listRequisitos);
-    document.getElementById('body_panelAddReq').innerHTML = "";
+    document.getElementById(bodypanel).innerHTML = "";
     document.getElementById(nomModal).getElementsByTagName('textarea')[0].innerText = "";
-    $("list_req_proc").prop('required', true);
+    $(selec).prop('required', true);
     reqProc = [];
 
 
 }
+
+$("#btn_updt").on("click", function (e) {
+    console.log($("#btn_updt").attr('data-target'));
+    if ($("#btn_updt").attr('data-target') === '#modal_procUpdt' && !selected) {
+        e.stopPropagation();
+    }
+    if ($("#btn_updt").attr('data-target') === '#updt_panel' && !selectedUser) {
+        e.stopPropagation();
+    }
+});

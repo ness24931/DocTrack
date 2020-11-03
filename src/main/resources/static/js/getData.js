@@ -8,10 +8,17 @@ function loadData(url, data, callback) {
         // }
     }).
     then(result => {
-        if(!result.ok){
-            throw Error(result.status);
+        if (result.status != 200) {
+            // if (!result.ok) {
+            throw Error(result.statusText);
+        } else {
+            return result.json();
         }
-        return result.json()                
-    }).then(callback).catch(console.log);
+    }).then(callback).catch(function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "El usuario ya existe"
+        })
+    });
 }
-

@@ -385,10 +385,26 @@ function updateUser() {
     loadData(url, data, function () {
         // window.alert("Usuario Actualizado");
         menuUsers();
-        Swal.fire({
-            icon: 'success',
-            title: 'Actualizado'
-        })
+        
+
+Swal.fire({
+    title: '¿Desea actualizar el usuario?',
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: `Actualizar`,
+    denyButtonText: `NO Actualizar`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      Swal.fire('Actualizado!', '', 'success')
+    } else if (result.isDenied) {
+      Swal.fire('No se Actualizo el usuario', '', 'info')
+    }
+  })
+
+
+
+
     });
 }
 
@@ -458,8 +474,12 @@ function addEmployee() {
     data.append('u_user', u_user);
     data.append('u_pass', u_pass);
     loadData(url, data, () => {
-        window.alert("Usuario Ingresado");
+        // window.alert("Usuario Ingresado");
         menuUsers();
+        Swal.fire({
+            icon: 'success',
+            title: 'Usuario Ingresado'
+        })
     });
 }
 
@@ -553,7 +573,11 @@ function createProc() {
         data.append('description', desc);
         loadData(url, data, async function () {
             menuProcess();
-            window.alert("insertado")
+            //window.alert("insertado")
+            Swal.fire({
+                icon: 'success',
+                title: 'Protocolo Creado!!'
+            })
         });
     } else {
         let form = document.getElementById('form_create_proc');
@@ -580,7 +604,11 @@ function updateProc() {
         data.append('description', document.getElementById('desc_procUdpt').value);
         loadData(url, data, async function () {
             menuProcess();
-            window.alert('Actualizado');
+            //window.alert('Actualizado');
+            Swal.fire({
+                icon: 'success',
+                title: 'Tramite Actualizado'
+            })
         });
 
     }

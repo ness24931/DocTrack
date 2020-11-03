@@ -16,17 +16,26 @@ function login() {
             //     'Origin': 'http://localhost:3000'
             // }
         }).
-        then(result => {
-            return result.json()
-        }).then(datos => {
-            if (datos.rol === 1) {
-                // console.log(JSON.stringify(datos));
-                window.alert("Se ha logueado")
-                window.location.href = "html/view_admin.html";
-            } else
-            if (datos.rol === -1) {
-                window.alert("NO TIENE LOS PERMISOS NECESARIOS")
-            }
-        });
+            then(result => {
+                return result.json()
+            }).then(datos => {
+                if (datos.rol === 1) {
+                    // console.log(JSON.stringify(datos));
+                    //window.alert("Se ha logueado")
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Se ha logueado'
+                    }).then(()=>window.location.href = "html/view_admin.html");
+
+    } else
+        if (datos.rol === -1) {
+            //window.alert("NO TIENE LOS PERMISOS NECESARIOS")
+            Swal.fire({
+                icon: 'error',
+                title: 'NO TIENE LOS PERMISOS NECESARIOS'
+            })
+        }
+});
     }
 }

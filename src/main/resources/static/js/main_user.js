@@ -481,5 +481,12 @@ function selecProc(id) {
     }
 }
 
-
-
+window.onunload = () => {
+    listUsuarios = [];
+    listDepartments = [];
+    listDepartments1 = [];
+    listRequisitos = [];
+    reqProc = [];
+    list_request = [];
+    prod = null;
+};

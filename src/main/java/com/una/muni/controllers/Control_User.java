@@ -40,7 +40,7 @@ public class Control_User {
 	private t_employeesRepository repoE;
 
 	@RequestMapping(value = "insert", method = RequestMethod.POST)
-	public @ResponseBody String insert(@RequestParam(name = "e_dni") String dni,
+	public /*@ResponseBody String*/void insert(@RequestParam(name = "e_dni") String dni,
 			@RequestParam(name = "e_name") String name, @RequestParam(name = "e_first") String firstsur,
 			@RequestParam(name = "e_second") String secondsur, @RequestParam(name = "e_email") String email,
 			@RequestParam(name = "e_tel") String tel, @RequestParam(name = "e_department") int department,
@@ -76,16 +76,16 @@ public class Control_User {
 
 		u.setTEmployee(emplo);
 
-		if (repo.existsById(u.getUsername())) {
-			System.out.println("si entro al error");
+		if (repo.existsById(u.getUsername())) {			
 			throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
-		} else {
-			System.out.println("si entro al else del error");
+		} else {			
 			repoE.save(u.getTEmployee());
 			repo.save(u);
-			o.put("status", "ok");
+			throw new ResponseStatusException(HttpStatus.OK);
+			// o.put("status", "ok");
 		}
-		return o.toString();
+		// return o.toString();
+		
 	}
 
 	@RequestMapping(value = "listar", method = RequestMethod.POST)

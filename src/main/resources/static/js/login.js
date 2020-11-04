@@ -25,7 +25,7 @@ function login() {
 
                 Swal.fire({
                     icon: 'success',
-                    title: 'Loggin con éxito'
+                    title: 'Login con éxito'
                 }).then(() => window.location.href = "html/view_admin.html");
 
             } else

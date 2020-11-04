@@ -7,4 +7,5 @@ import com.una.muni.model.TEmployee;
 @Repository
 public interface t_employeesRepository extends CrudRepository<TEmployee, Integer> {
     Iterable<TEmployee> findAllByFirstName(String firstName);
+    TEmployee findByDni(String employeeId);
 }

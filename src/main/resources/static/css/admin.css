@@ -73,3 +73,11 @@ a {
   text-decoration: none;
   background-color: transparent;
 }
+
+.requisitos_add {
+  border-top: 1px solid #dee2e6;
+  padding-top: 8px;
+}
+.div_req_add input,.div_req_add button,.div_req_add textarea{
+  margin-top: 15px;
+}

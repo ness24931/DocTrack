@@ -58,3 +58,7 @@ header{
   #register-link {
   margin-top: -85px;
 }
+
+input[type=text]{
+  font-size: larger;
+}

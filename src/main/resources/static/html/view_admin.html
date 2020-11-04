@@ -207,15 +207,6 @@
     </div>
 </div>
 
-
-
-
-
-
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_viewMore">
-        Open modal
-    </button> -->
-
 <!-- The Modal view more of users-->
 <div class="modal" id="modal_viewMore">
     <div class="modal-dialog">
@@ -261,17 +252,16 @@
         </div>
     </div>
 </div>
+
 <!-- Modal view requisitos  -->
 <div class="modal" id="modal_viewMoreRequi">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Requisitos</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
                 <table class="table">
@@ -286,7 +276,6 @@
                     </tbody>
                 </table>
             </div>
-
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -296,9 +285,9 @@
 </div>
 
 <!-- modal create user -->
-<div class="modal fade" id="modal_Admin" role="dialog">
+<div class="modal fade" id="modal_Admin" role="dialog" aria-labelledby="modalCreateUser" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false" tabindex="-1">
     <div class="modal-dialog" role="document">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header" text-center>
@@ -353,25 +342,28 @@
                     <label for="u_user">Nombre de Usuario</label>
                     <input type="text" class="form-control" id="u_user">
                 </div>
-                <label for="u_pass">Contraseña</label>
-                <input type="text" id="u_pass" readonly>
-                <button type="button" class="btn btn-secondary" class="form-control" onclick="genPass('u_pass')">
-                    Generar Contraseña
-                </button>
+                <div class="form-group">
+                    <label for="u_pass">Contraseña</label>
+                    <input type="text" id="u_pass" readonly>
+                    <button type="button" class="btn btn-secondary" class="form-control" onclick="genPass('u_pass')">
+                        Generar Contraseña
+                    </button>
+                </div>
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-success" onclick="addEmployee()">Crear Usuario</button>
+                </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success" onclick="addEmployee()">Crear Usuario</button>
-
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
             </div>
-
         </div>
     </div>
 </div>
 
 <!-- Modal updt user-->
-<div class="modal fade" id="updt_panel" tabindex="-1" role="dialog" aria-labelledby="updt_panel" aria-hidden="true">
+<div class="modal fade" id="updt_panel" tabindex="-1" role="dialog" aria-labelledby="updt_panel" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -379,7 +371,6 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-
             </div>
             <div class="modal-body">
                 <div id="updt_panel" class="row justify-content-center">
@@ -449,18 +440,15 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="bntUpdateU" type="button" class="btn btn-primary">Actualizar
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button id="bntUpdateU" type="button" class="btn btn-primary" onclick="updateUser()">Actualizar</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Trigger the modal with a button -->
-<!-- <div class="crea_proc">
-            <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#modal_proc">Crear
-                Proceso</button> -->
-<!-- Modal -->
+<!-- Modal creacion de tramites-->
 <div class="modal fade" id="modal_proc" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
     data-backdrop="static" data-keyboard="false" tabindex="-1">
     <div class="modal-dialog" role="document">
@@ -473,19 +461,6 @@
             <div class="modal-body text-center">
                 <div class="container">
                     <form id="form_create_proc" class="needs-validation" novalidate>
-                        <div class="form-group">
-                            <select id="list_req_proc" class="custom-select browser-default" onchange="loadInfo()"
-                                required>
-                                <option value="">Lista de Requisitos</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Seleccione un requisito de la lista.
-                            </div>
-                            <button type="button" class="btn btn-secondary" onclick="addReq()">
-                                Agregar Requisito
-                            </button>
-                            <textarea id="info_req" class="form-control" rows="5" cols="50" readonly></textarea>
-                        </div>
                         <div class="form-group">
                             <label for="title_proc">Titulo</label>
                             <input type="text" class="form-control" id="title_proc" required>
@@ -500,8 +475,21 @@
                                 Se debe agregar una descripción.
                             </div>
                         </div>
-                        <div class="form-group">
-                            <p>Lista de requisitos del proceso</p>
+                        <div class="form-group div_req_add">
+                            <select id="list_req_proc" class="custom-select browser-default" onchange="loadInfo()"
+                                required>
+                                <option value="">Lista de Requisitos</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Seleccione un requisito de la lista.
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addReq()">
+                                Agregar Requisito
+                            </button>
+                            <textarea id="info_req" class="form-control" rows="3" cols="50" readonly></textarea>
+                        </div>
+                        <div class="form-group requisitos_add">
+                            <p>Requisitos agregados</p>
                             <table class="table table-bordered" id="panelAlreadyAdd">
                                 <thead class="thead-dark">
                                     <tr>
@@ -547,19 +535,6 @@
                 <div class="container">
                     <form id="form_create_procU" class="needs-validation" novalidate>
                         <div class="form-group">
-                            <select id="list_req_procU" class="custom-select browser-default" onchange="loadInfo('list_req_procU')"
-                                required>
-                                <option value="">Lista de Requisitos</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Seleccione un requisito de la lista.
-                            </div>
-                            <button type="button" class="btn btn-secondary" onclick="addReq('body_panelAddReqU')">
-                                Agregar Requisito
-                            </button>
-                            <textarea id="info_reqU" class="form-control" rows="5" cols="50" readonly></textarea>
-                        </div>
-                        <div class="form-group">
                             <label for="title_proc">Titulo</label>
                             <input type="text" class="form-control" id="title_procU" required>
                             <div class="invalid-feedback">
@@ -573,7 +548,20 @@
                                 Se debe agregar una descripción.
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group div_req_add">
+                            <select id="list_req_procU" class="custom-select browser-default"
+                                onchange="loadInfo('list_req_procU')" required>
+                                <option value="">Lista de Requisitos</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Seleccione un requisito de la lista.
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addReq('body_panelAddReqU')">
+                                Agregar Requisito
+                            </button>
+                            <textarea id="info_reqU" class="form-control" rows="3" cols="50" readonly></textarea>
+                        </div>
+                        <div class="form-group requisitos_add">
                             <p>Lista de requisitos del proceso</p>
                             <table class="table table-bordered" id="panelAlreadyAdd">
                                 <thead class="thead-dark">

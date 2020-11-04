@@ -234,9 +234,9 @@ function loadUsers(datos) {
     document.getElementById('btn_filter').setAttribute('data-target', '#modal_filter');
     document.getElementById('btn_insert').setAttribute('data-target', '#modal_Admin');
     document.getElementById('btn_updt').setAttribute('data-target', '#updt_panel');
-    document.getElementById('btn_updt').addEventListener('click', function () {
-        seleccionar();
-    });
+    // document.getElementById('btn_updt').addEventListener('click', function () {
+    //     seleccionar();
+    // });
     document.getElementById('btn_crud').style.display = 'block';
 }
 
@@ -374,71 +374,76 @@ function selectRow(i) {
     row.style.backgroundColor = "#02315f";
     row.style.color = "white";
     if ($("#btn_updt").attr('data-target') === '#updt_panel') {
-        selectedUser = listUsuarios[i];                
-        document.getElementById('e_dniUpdt').value = selectedUser.temployee.dni;
-        document.getElementById('e_nombreUpdt').value =selectedUser.temployee.firstName;
-        document.getElementById('e_first_surnameUpdt').value=selectedUser.temployee.firstSurname;
-        document.getElementById('e_second_surnameUpdt').value=selectedUser.temployee.secondSurname;
-
-        ////////////////////////////////////////////////////////
-        document.getElementById('e_emailUpdt').value=selectedUser.temployee.email;
-        document.getElementById('e_telUpdt').value=selectedUser.temployee.telephone;
-        document.getElementById('e_departmentUpdt').value;
-        document.getElementById('e_positionUpdt').value;
-        document.getElementById('u_userUpdt').value;
-        document.getElementById('u_passUpdt').value;
-        let usuario = selected;
-        /////////////////////////////////////////////////////////
-        usuario.temployee.dni = e_dniUpdt;
-        usuario.temployee.first_name = e_nombreUpdt;
-        usuario.temployee.first_surname = e_first_surnameUpdt;
-        ///////////////////////////////////////////////////////////////
-        usuario.temployee.second_surname = e_second_surnameUpdt;
-        usuario.temployee.email = e_emailUpdt;
-        usuario.temployee.telephone = e_telUpdt;
-        usuario.temployee.tdepartment.departmentName = e_departmentUpdt;
-        usuario.temployee.tjob.jobTitle = e_positionUpdt;
-        usuario.username = u_userUpdt;
-        usuario.passwd = u_passUpdt;
+        selectedUser = listUsuarios[i];
     } else {
         selected = listTramites[i];
     }
 }
 
 function seleccionar() {
-    requestDepartments();
+    document.getElementById('e_dniUpdt').value = selectedUser.temployee.dni;
     loadDepartments(listDepartments, 'e_departmentUpdt');
-    ///////////////////////////////////////////////////////////////////
-    let e_dniUpdt = document.getElementById('e_dniUpdt');
-    let e_nombreUpdt = document.getElementById('e_nombreUpdt');
-    let e_first_surnameUpdt = document.getElementById('e_first_surnameUpdt');
-    let e_second_surnameUpdt = document.getElementById('e_second_surnameUpdt');
-    /////////////////////////////////////////////////////////////
+    document.getElementById('e_nombreUpdt').value = selectedUser.temployee.firstName;
+    document.getElementById('e_first_surnameUpdt').value = selectedUser.temployee.firstSurname;
+    document.getElementById('e_second_surnameUpdt').value = selectedUser.temployee.secondSurname;
+    document.getElementById('e_emailUpdt').value = selectedUser.temployee.email;
+    document.getElementById('e_telUpdt').value = selectedUser.temployee.telephone;
+    document.getElementById('e_departmentUpdt').selectedIndex = listDepartments.find(d => d.departmentId === selectedUser.temployee.tdepartment.departmentId).departmentId;
+    document.getElementById('e_positionUpdt').selectedIndex = selectedUser.temployee.tjob.jobId;
+    document.getElementById('u_userUpdt').value = selectedUser.username;
+    // let btnUpdate = document.getElementById('bntUpdateU');
+    // btnUpdate.addEventListener('click', function () {
+    //      updateUser();
+    // });
+
+    //     /////////////////////////////////////////////////////////
+    //     usuario.temployee.dni = e_dniUpdt;
+    //     usuario.temployee.first_name = e_nombreUpdt;
+    //     usuario.temployee.first_surname = e_first_surnameUpdt;
+    //     ///////////////////////////////////////////////////////////////
+    //     usuario.temployee.second_surname = e_second_surnameUpdt;
+    //     usuario.temployee.email = e_emailUpdt;
+    //     usuario.temployee.telephone = e_telUpdt;
+    //     usuario.temployee.tdepartment.departmentName = e_departmentUpdt;
+    //     usuario.temployee.tjob.jobTitle = e_positionUpdt;
+    //     usuario.username = u_userUpdt;
+    //     usuario.passwd = u_passUpdt;
 
 
-    let e_emailUpdt = document.getElementById('e_emailUpdt');
-    let e_telUpdt = document.getElementById('e_telUpdt');
-    let e_departmentUpdt = document.getElementById('e_departmentUpdt');
 
-    let e_positionUpdt = document.getElementById('e_positionUpdt');
-    let u_userUpdt = document.getElementById('u_userUpdt');
-    let u_passUpdt = document.getElementById('u_passUpdt');
-    let btnUpdate = document.getElementById('bntUpdateU');
-    btnUpdate.addEventListener('click', function () {
-        updateUser();
-    });
-    //////////////////////////////////////////////////////
-    e_dniUpdt.value = selected.temployee.dni;
-    e_nombreUpdt.value = selected.temployee.first_name;
-    e_first_surnameUpdt.value = selected.first_surname;
-    e_second_surnameUpdt.value = selected.second_surname;
-    ///////////////////////////////////////////////
-    e_emailUpdt.value = selected.temployee.email;
-    e_telUpdt.value = selected.temployee.telephone;
-    u_userUpdt.value = selected.username;
-    u_passUpdt.value = selected.passwd;
-    e_departmentUpdt.selectedIndex = getIndex(e_departmentUpdt, selected.temployee.tdepartment.departmentName);
-    e_positionUpdt.selectedIndex = getIndex(e_positionUpdt, selected.temployee.tjob.jobTitle);
+    // requestDepartments();
+    // loadDepartments(listDepartments, 'e_departmentUpdt');
+    // ///////////////////////////////////////////////////////////////////
+    // let e_dniUpdt = document.getElementById('e_dniUpdt');
+    // let e_nombreUpdt = document.getElementById('e_nombreUpdt');
+    // let e_first_surnameUpdt = document.getElementById('e_first_surnameUpdt');
+    // let e_second_surnameUpdt = document.getElementById('e_second_surnameUpdt');
+    // /////////////////////////////////////////////////////////////
+
+
+    // let e_emailUpdt = document.getElementById('e_emailUpdt');
+    // let e_telUpdt = document.getElementById('e_telUpdt');
+    // let e_departmentUpdt = document.getElementById('e_departmentUpdt');
+
+    // let e_positionUpdt = document.getElementById('e_positionUpdt');
+    // let u_userUpdt = document.getElementById('u_userUpdt');
+    // let u_passUpdt = document.getElementById('u_passUpdt');
+    // let btnUpdate = document.getElementById('bntUpdateU');
+    // btnUpdate.addEventListener('click', function () {
+    //     updateUser();
+    // });
+    // //////////////////////////////////////////////////////
+    // e_dniUpdt.value = selected.temployee.dni;
+    // e_nombreUpdt.value = selected.temployee.first_name;
+    // e_first_surnameUpdt.value = selected.first_surname;
+    // e_second_surnameUpdt.value = selected.second_surname;
+    // ///////////////////////////////////////////////
+    // e_emailUpdt.value = selected.temployee.email;
+    // e_telUpdt.value = selected.temployee.telephone;
+    // u_userUpdt.value = selected.username;
+    // u_passUpdt.value = selected.passwd;
+    // e_departmentUpdt.selectedIndex = getIndex(e_departmentUpdt, selected.temployee.tdepartment.departmentName);
+    // e_positionUpdt.selectedIndex = getIndex(e_positionUpdt, selected.temployee.tjob.jobTitle);
 }
 
 function updateUser() {
@@ -455,46 +460,55 @@ function updateUser() {
     let e_departmentUpdt = document.getElementById('e_departmentUpdt').value;
     let e_positionUpdt = document.getElementById('e_positionUpdt').value;
     let u_userUpdt = document.getElementById('u_userUpdt').value;
-    let u_passUpdt = document.getElementById('u_passUpdt').value;
-    let usuario = selected;
-    /////////////////////////////////////////////////////////
-    usuario.temployee.dni = e_dniUpdt;
-    usuario.temployee.first_name = e_nombreUpdt;
-    usuario.temployee.first_surname = e_first_surnameUpdt;
-    ///////////////////////////////////////////////////////////////
-    usuario.temployee.second_surname = e_second_surnameUpdt;
-    usuario.temployee.email = e_emailUpdt;
-    usuario.temployee.telephone = e_telUpdt;
-    usuario.temployee.tdepartment.departmentName = e_departmentUpdt;
-    usuario.temployee.tjob.jobTitle = e_positionUpdt;
-    usuario.username = u_userUpdt;
-    usuario.passwd = u_passUpdt;
-    let data = new FormData();
-    data.append('user', JSON.stringify(usuario));
-    loadData(url, data, function () {
-
-        menuUsers();
-
-
+    let u_passUpdt = document.getElementById('u_passUpdt').value;    
+    let usuario = selectedUser;
+    if (!usuario) {
         Swal.fire({
-            title: '¿Desea actualizar el usuario?',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: `Actualizar`,
-            denyButtonText: `NO Actualizar`,
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                Swal.fire('Actualizado!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('No se Actualizo el usuario', '', 'info')
-            }
-        })
+            icon: 'error',
+            title: 'No se ha seleccionado ningún usuario'
+        });
+    } else {
+        /////////////////////////////////////////////////////////
+        usuario.temployee.dni = e_dniUpdt;
+        usuario.temployee.first_name = e_nombreUpdt;
+        usuario.temployee.first_surname = e_first_surnameUpdt;
+        ///////////////////////////////////////////////////////////////
+        usuario.temployee.second_surname = e_second_surnameUpdt;
+        usuario.temployee.email = e_emailUpdt;
+        usuario.temployee.telephone = e_telUpdt;
+        usuario.temployee.tdepartment.departmentName = e_departmentUpdt;
+        usuario.temployee.tjob.jobTitle = e_positionUpdt;
+        usuario.username = u_userUpdt;
+        usuario.passwd = u_passUpdt;
+        let data = new FormData();
+        data.append('oldDNI',selectedUser.dni)
+        data.append('oldUserName',selectedUser.username)
+        data.append('user', JSON.stringify(usuario));
+        loadData(url, data, function () {
+
+            menuUsers();
+
+
+            Swal.fire({
+                title: '¿Desea actualizar el usuario?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Actualizar`,
+                denyButtonText: `NO Actualizar`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire('Actualizado!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('No se Actualizo el usuario', '', 'info')
+                }
+            })
 
 
 
 
-    });
+        });
+    }
 }
 
 
@@ -749,8 +763,22 @@ $("#btn_updt").on("click", function (e) {
     console.log($("#btn_updt").attr('data-target'));
     if ($("#btn_updt").attr('data-target') === '#modal_procUpdt' && !selected) {
         e.stopPropagation();
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Seleccione primero un trámite de la tabla'
+        });
     }
-    if ($("#btn_updt").attr('data-target') === '#updt_panel' && !selectedUser) {
-        e.stopPropagation();
+    if ($("#btn_updt").attr('data-target') === '#updt_panel') {
+        if (!selectedUser) {
+            e.stopPropagation();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Seleccione primero un usuario de la tabla'
+            });
+        } else {
+            seleccionar();
+        }
     }
 });

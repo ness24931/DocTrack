@@ -40,7 +40,7 @@ public class Control_User {
 	private t_employeesRepository repoE;
 
 	@RequestMapping(value = "insert", method = RequestMethod.POST)
-	public /*@ResponseBody String*/void insert(@RequestParam(name = "e_dni") String dni,
+	public /* @ResponseBody String */void insert(@RequestParam(name = "e_dni") String dni,
 			@RequestParam(name = "e_name") String name, @RequestParam(name = "e_first") String firstsur,
 			@RequestParam(name = "e_second") String secondsur, @RequestParam(name = "e_email") String email,
 			@RequestParam(name = "e_tel") String tel, @RequestParam(name = "e_department") int department,
@@ -76,16 +76,16 @@ public class Control_User {
 
 		u.setTEmployee(emplo);
 
-		if (repo.existsById(u.getUsername())) {			
+		if (repo.existsById(u.getUsername())) {
 			throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
-		} else {			
+		} else {
 			repoE.save(u.getTEmployee());
 			repo.save(u);
 			throw new ResponseStatusException(HttpStatus.OK);
 			// o.put("status", "ok");
 		}
 		// return o.toString();
-		
+
 	}
 
 	@RequestMapping(value = "listar", method = RequestMethod.POST)
@@ -106,7 +106,8 @@ public class Control_User {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public @ResponseBody String update(@RequestParam(name = "user") String u) {
+	public @ResponseBody String update(@RequestParam(name = "user") String u,
+			@RequestParam(name = "oldDNI") String oldDni, @RequestParam(name = "oldUserName") String oldUserName) {
 
 		JSONObject user = new JSONObject(u);
 		JSONObject role = user.getJSONObject("trole");
@@ -117,6 +118,7 @@ public class Control_User {
 		JSONArray tickets = employee.getJSONArray("ttickets");
 
 		System.out.println(user.toString());
+		System.out.println(oldDni);
 
 		TDepartment depa = new TDepartment();
 		depa.setDepartmentId(department.getInt("departmentId"));
@@ -150,8 +152,13 @@ public class Control_User {
 		tuser.setTEmployee(emp);
 		tuser.setTRole(trole);
 
-		repoE.save(emp);
-		repo.save(tuser);
+		TEmployee aux = repoE.findByDni(oldDni);
+		if (aux != null) {
+			emp.setEmployeeId(aux.getEmployeeId());
+			repoE.save(emp);
+			// repo.updateUserName(tuser.getUsername(), oldUserName);
+			repo.save(tuser);
+		}
 
 		JSONObject o = new JSONObject();
 		o.put("response", "ok");

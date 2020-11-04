@@ -499,15 +499,14 @@ function executeUpdt() {
         let form = document.getElementById('form_updt_user');
         form.classList.add('was-validated');
         if (!justNumerexp.test(e_dniUpdt)) {
-            e_dniUpdt.value = "";
+            document.getElementById('e_dniUpdt').value = "";
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Digite solo números en el campo del número de cédula'
             });
-        }
-        if (!justNumerexp.test(e_telUpdt)) {
-            e_telUpdt.value = "";
+        } else if (!justNumerexp.test(e_telUpdt)) {
+            document.getElementById('e_telUpdt').value = "";
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -526,7 +525,6 @@ function executeUpdt() {
                 text: 'Hay campos vacíos'
             });
         }
-
     } else {
         usuario.temployee.dni = e_dniUpdt;
         usuario.temployee.firstName = e_nombreUpdt;
@@ -613,15 +611,23 @@ function addEmployee() {
     let u_pass = document.getElementById('u_pass').value;
     let justNumerexp = new RegExp("^[0-9]+$");
     if (u_dni === "" || u_name === "" || u_first === "" || u_second === "" || u_email === "" || u_tel === "" || departments === "" ||
-        position === "" || u_user === "" || u_pass === "" || !justNumerexp.test(u_dni)) {
+        position === "" || u_user === "" || u_pass === "" || !justNumerexp.test(u_dni) || !justNumerexp.test(u_tel)) {
         let form = document.getElementById('form_addEmployee');
         form.classList.add('was-validated');
         genPass('u_pass');
         if (!justNumerexp.test(u_dni)) {
+            document.getElementById('e_dni').value = "";
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Digite solo números en el campo del número de cédula'
+            });
+        } else if (!justNumerexp.test(u_tel)) {
+            document.getElementById('e_tel').value = "";
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Digite solo números en el campo del número de teléfono'
             });
         } else {
             Swal.fire({
@@ -727,6 +733,32 @@ function loadRequirements(datos) {
     }
 }
 
+function deleteReqProc(id) {
+    const index = reqProc.findIndex(e => e.requirementId === id);
+    if (index > -1) {
+        reqProc.splice(index, 1);
+    }
+    let tbody = document.getElementById("body_panelAddReq");
+    tbody.innerHTML = "";
+    for (let rq of reqProc) {
+        let tr = document.createElement('tr');
+        let td = document.createElement('td');
+        td.innerText = rq.title;
+        let button = document.createElement('button');
+        button.classList.add("btn");
+        button.classList.add("btn-secondary");
+        button.click = `deleteReqProc(${rq.requirementId})`;
+        button.innerText = 'Eliminar';
+        tr.appendChild(td);
+        tr.appendChild(button);
+        tbody.appendChild(tr);
+        s.remove(parseInt(s.selectedIndex));
+        document.getElementById('list_req_proc').removeAttribute('required');
+    }
+
+}
+
+
 function addReq(select = 'list_req_proc') {
     // let panelAlreadyAdd = document.getElementById('panelAlreadyAdd');
     // let i = document.getElementById('list_req_proc').selectedIndex;
@@ -739,7 +771,11 @@ function addReq(select = 'list_req_proc') {
         let button = document.createElement('button');
         button.classList.add("btn");
         button.classList.add("btn-secondary");
-        button.click = `deleteReqProc(${listRequisitos[s.value].requirementId})`;
+        let index=parseInt(s.value);
+        let rId=listRequisitos[index].requirementId;
+        button.addEventListener("click", function () {
+            deleteReqProc(rId);
+        });
         button.innerText = 'Eliminar';
         tr.appendChild(td);
         tr.appendChild(button);

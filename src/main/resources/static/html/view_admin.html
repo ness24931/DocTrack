@@ -232,6 +232,11 @@
                             </th>
                     </tr>
                     <tr>
+                        <th scope="row">Puesto</th>
+                        <td id="td_job">
+                            </th>
+                    </tr>
+                    <tr>
                         <th scope="row">Rol</th>
                         <td id="td_role">
                             </th>
@@ -296,62 +301,88 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-
-                </form>
-                <form class="form-horizontal"></form>
-                <div class="form-group">
-                    <label for="u_dni">Número de cédula</label>
-                    <input type="text" class="form-control" id="e_dni">
-                </div>
-                <div class="form-group">
-                    <label for="u_name">Nombre</label>
-                    <input type="text" class="form-control" id="e_name">
-                </div>
-                <div class="form-group">
-                    <label for="u_first">Primer Apellido</label>
-                    <input type="text" class="form-control" id="e_first">
-                </div>
-                <div class="form-group">
-                    <label for="u_second">Segundo Apellido</label>
-                    <input type="text" class="form-control" id="e_second">
-                </div>
-                <div class="form-group">
-                    <label for="u_email">Correo Electrónico</label>
-                    <input type="text" class="form-control" id="e_email">
-                </div>
-                <div class="form-group">
-                    <label for="u_tel">Teléfono</label>
-                    <input type="text" class="form-control" id="e_tel">
-                </div>
-                <div class="form-group">
-                    <label for="u_deparment">Departamento</label>
-                    <select id="e_department" class="form-control form-control-sm">
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="u_position">Puesto</label>
-                    <select id="e_position" class="form-control form-control-sm">
-                        <option value="1">Puesto</option>
-                        <option value="2">Secretario(a)</option>
-                        <option value="3">Alcalde</option>
-                        <option value="4">Coordinador(a)</option>
-                        <option value="5">Oficinista</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="u_user">Nombre de Usuario</label>
-                    <input type="text" class="form-control" id="u_user">
-                </div>
-                <div class="form-group">
-                    <label for="u_pass">Contraseña</label>
-                    <input type="text" id="u_pass" readonly>
-                    <button type="button" class="btn btn-secondary" class="form-control" onclick="genPass('u_pass')">
-                        Generar Contraseña
-                    </button>
-                </div>
-                <div class="form-group text-center">
-                    <button type="button" class="btn btn-success" onclick="addEmployee()">Crear Usuario</button>
-                </div>
+                <form id="form_addEmployee" class="form-horizontal needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="u_dni">Número de cédula</label>
+                        <input type="text" class="form-control" id="e_dni" required>
+                        <div class="invalid-feedback">
+                            Este campo es obligatorio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="u_name">Nombre</label>
+                        <input type="text" class="form-control" id="e_name" required>
+                        <div class="invalid-feedback">
+                            Este campo es obligatorio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="u_first">Primer Apellido</label>
+                        <input type="text" class="form-control" id="e_first" required>
+                        <div class="invalid-feedback">
+                            Este campo es obligatorio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="u_second">Segundo Apellido</label>
+                        <input type="text" class="form-control" id="e_second" required>
+                        <div class="invalid-feedback">
+                            Este campo es obligatorio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="u_email">Correo Electrónico</label>
+                        <input type="text" class="form-control" id="e_email" required>
+                        <div class="invalid-feedback">
+                            Este campo es obligatorio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="u_tel">Teléfono</label>
+                        <input type="text" class="form-control" id="e_tel" required>
+                        <div class="invalid-feedback">
+                            Este campo es obligatorio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="u_deparment">Departamento</label>
+                        <select id="e_department" class="form-control form-control-sm" required>
+                        </select>
+                        <div class="invalid-feedback">
+                            Este campo es obligatorio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="u_position">Puesto</label>
+                        <select id="e_position" class="form-control form-control-sm" required>
+                            <option value="">Puesto</option>
+                            <option value="Secretario(a)">Secretario(a)</option>
+                            <option value="Alcalde">Alcalde</option>
+                            <option value="Coordinador(a)">Coordinador(a)</option>
+                            <option value="Oficinista">Oficinista</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Este campo es obligatorio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="u_user">Nombre de Usuario</label>
+                        <input type="text" class="form-control" id="u_user" required>
+                        <div class="invalid-feedback">
+                            Este campo es obligatorio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="u_pass">Contraseña</label>
+                        <input type="text" id="u_pass" readonly>
+                        <button type="button" class="btn btn-secondary" class="form-control"
+                            onclick="genPass('u_pass')">
+                            Generar Contraseña
+                        </button>
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="button" class="btn btn-success" onclick="addEmployee()">Crear Usuario</button>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -375,73 +406,101 @@
             <div class="modal-body">
                 <div id="updt_panel" class="row justify-content-center">
                     <div class="container">
-
-                        <div class="row justify-content-center">
-                            <!-- --------------------------------------------------------------------- -->
-                            <div class="col -8">
-                                <div class="form-group">
-                                    <label for="e_dniUpdt">Cédula</label>
-                                    <input type="text" class="form-control" id="e_dniUpdt">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="e_nombreUpdt">Nombre</label>
-                                    <input type="text" class="form-control" id="e_nombreUpdt">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="e_first_surnameUpdt">Primer Apellido</label>
-                                    <input type="text" class="form-control" id="e_first_surnameUpdt">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="e_second_surnameUpdt">Segundo Apellido</label>
-                                    <input type="text" class="form-control" id="e_second_surnameUpdt">
-                                </div>
-                                <!-- -------------------------------------------------------------------------- -->
+                        <form id="form_updt_user" class="needs-validation" novalidate>
+                            <div class="row justify-content-center">
+                                <!-- --------------------------------------------------------------------- -->
                                 <div class="col -8">
                                     <div class="form-group">
-                                        <label for="e_emailUpdt">Correo Electrónico</label>
-                                        <input type="text" class="form-control" id="e_emailUpdt">
+                                        <label for="e_dniUpdt">Cédula</label>
+                                        <input type="text" class="form-control" id="e_dniUpdt" required>
+                                        <div class="invalid-feedback">
+                                            Este campo es obligatorio.
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="e_telUpdt">Teléfono</label>
-                                        <input type="text" class="form-control" id="e_telUpdt">
+                                        <label for="e_nombreUpdt">Nombre</label>
+                                        <input type="text" class="form-control" id="e_nombreUpdt" required>
+                                        <div class="invalid-feedback">
+                                            Este campo es obligatorio.
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="e_first_surnameUpdt">Primer Apellido</label>
+                                        <input type="text" class="form-control" id="e_first_surnameUpdt" required>
+                                        <div class="invalid-feedback">
+                                            Este campo es obligatorio.
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <select id="e_departmentUpdt">
-                                            <option>Departamento</option>
-                                        </select>
+                                        <label for="e_second_surnameUpdt">Segundo Apellido</label>
+                                        <input type="text" class="form-control" id="e_second_surnameUpdt" required>
+                                        <div class="invalid-feedback">
+                                            Este campo es obligatorio.
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <select id="e_positionUpdt">
-                                            <option>Puesto</option>
-                                            <option>Secretario(a)</option>
-                                            <option>Alcalde</option>
-                                            <option>Coordinador(a)</option>
-                                            <option>Oficinista</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="u_userUpdt">Nombre de Usuario</label>
-                                        <input type="text" class="form-control" id="u_userUpdt">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="u_passUpdt">Contraseña</label>
-                                        <input type="text" id="u_passUpdt" readonly>
-                                        <button type="button" class="btn btn-secondary" class="form-control"
-                                            onclick="genPass('u_passUpdt')">Generar
-                                            Contraseña</button>
+                                    <div class="col -8">
+                                        <div class="form-group">
+                                            <label for="e_emailUpdt">Correo Electrónico</label>
+                                            <input type="text" class="form-control" id="e_emailUpdt" required>
+                                            <div class="invalid-feedback">
+                                                Este campo es obligatorio.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="e_telUpdt">Teléfono</label>
+                                            <input type="text" class="form-control" id="e_telUpdt" required>
+                                            <div class="invalid-feedback">
+                                                Este campo es obligatorio.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <select id="e_departmentUpdt" required>
+                                                <option>Departamento</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Este campo es obligatorio.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <select id="e_positionUpdt" required>
+                                                <option value="">Puesto</option>
+                                                <option value="Secretario(a)">Secretario(a)</option>
+                                                <option value="Alcalde">Alcalde</option>
+                                                <option value="Coordinador(a)">Coordinador(a)</option>
+                                                <option value="Oficinista">Oficinista</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Este campo es obligatorio.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="u_userUpdt">Nombre de Usuario</label>
+                                            <input type="text" class="form-control" id="u_userUpdt" required>
+                                            <div class="invalid-feedback">
+                                                Este campo es obligatorio.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="u_passUpdt">Contraseña</label>
+                                            <input type="text" id="u_passUpdt" readonly required>
+                                            <button type="button" class="btn btn-secondary" class="form-control"
+                                                onclick="genPass('u_passUpdt')">Generar
+                                                Contraseña</button>
+                                            <div class="invalid-feedback">
+                                                Este campo es obligatorio.
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button id="bntUpdateU" type="button" class="btn btn-primary" onclick="updateUser()">Actualizar</button>
+                    <button id="bntUpdateU" type="button" class="btn btn-primary"
+                        onclick="updateUser()">Actualizar</button>
                 </div>
             </div>
         </div>

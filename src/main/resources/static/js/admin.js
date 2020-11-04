@@ -34,7 +34,13 @@ function menuProcess() {
     // cargarTablaUsers();
     const url = 'http://localhost:8080/t_requests/listar';
     let data = new FormData();
-    loadData(url, data, loadProcess);
+    loadData(url, data, loadProcess, function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "No se pudo cargar la lista de los trámites desde la base de datos"
+        })
+    });
 }
 
 function loadProcess(datos) {
@@ -224,7 +230,13 @@ function menuUsers() {
     requestDepartments();
     const url = 'http://localhost:8080/tusersE/listar';
     let data = new FormData();
-    loadData(url, data, loadUsers);
+    loadData(url, data, loadUsers, function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "No se pudo cargar la lista de usuarios desde la base de datos"
+        })
+    });
 }
 
 function loadUsers(datos) {
@@ -355,11 +367,13 @@ function showMore(i) {
     let td_pass = document.getElementById('td_pass');
     let td_role = document.getElementById('td_role');
     let td_status = document.getElementById('td_status');
+    let td_job = document.getElementById('td_job');
 
     td_username.innerText = listFilter[i].username;
     td_pass.innerText = listFilter[i].passwd;
     td_role.innerText = listFilter[i].trole.name;
     td_status.innerText = listFilter[i].status;
+    td_job.innerText = listFilter[i].temployee.tjob.jobTitle;
     // console.log(listUsuarios[i]);
 }
 
@@ -391,6 +405,7 @@ function seleccionar() {
     document.getElementById('e_departmentUpdt').selectedIndex = listDepartments.find(d => d.departmentId === selectedUser.temployee.tdepartment.departmentId).departmentId;
     document.getElementById('e_positionUpdt').selectedIndex = selectedUser.temployee.tjob.jobId;
     document.getElementById('u_userUpdt').value = selectedUser.username;
+    genPass('u_passUpdt');
     // let btnUpdate = document.getElementById('bntUpdateU');
     // btnUpdate.addEventListener('click', function () {
     //      updateUser();
@@ -447,66 +462,96 @@ function seleccionar() {
 }
 
 function updateUser() {
+    Swal.fire({
+        title: '¿Desea actualizar el usuario?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: `Actualizar`,
+        denyButtonText: `NO Actualizar`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            executeUpdt();
+        } else if (result.isDenied) {
+            Swal.fire('No se Actualizo el usuario', '', 'info');
+        }
+    });
+}
+
+function executeUpdt() {
     const url = 'http://localhost:8080/tusersE/update';
-    //////////////////////////////////////////////////////
     let e_dniUpdt = document.getElementById('e_dniUpdt').value;
     let e_nombreUpdt = document.getElementById('e_nombreUpdt').value;
     let e_first_surnameUpdt = document.getElementById('e_first_surnameUpdt').value;
     let e_second_surnameUpdt = document.getElementById('e_second_surnameUpdt').value;
-
-    ////////////////////////////////////////////////////////
     let e_emailUpdt = document.getElementById('e_emailUpdt').value;
     let e_telUpdt = document.getElementById('e_telUpdt').value;
-    let e_departmentUpdt = document.getElementById('e_departmentUpdt').value;
-    let e_positionUpdt = document.getElementById('e_positionUpdt').value;
+    let e_departmentUpdt = listDepartments.find(e => e.departmentId === parseInt(document.getElementById('e_departmentUpdt').value));
+    let e_positionUpdtIndex = document.getElementById('e_positionUpdt').selectedIndex;
+    let e_positionUpdtValue = document.getElementById('e_positionUpdt').value;
     let u_userUpdt = document.getElementById('u_userUpdt').value;
-    let u_passUpdt = document.getElementById('u_passUpdt').value;    
-    let usuario = selectedUser;
-    if (!usuario) {
-        Swal.fire({
-            icon: 'error',
-            title: 'No se ha seleccionado ningún usuario'
-        });
+    let u_passUpdt = document.getElementById('u_passUpdt').value;
+    let usuario = JSON.parse(JSON.stringify(selectedUser));
+    let justNumerexp = new RegExp("^[0-9]+$");
+    if (e_dniUpdt === "" || e_nombreUpdt === "" || e_first_surnameUpdt === "" || e_second_surnameUpdt === "" || e_emailUpdt === "" || e_telUpdt === "" || e_departmentUpdt === "" ||
+        e_positionUpdtIndex === "" || e_positionUpdtValue === "" || u_userUpdt === "" || u_passUpdt === "" ||
+        !justNumerexp.test(e_dniUpdt) || !justNumerexp.test(e_telUpdt)) {
+        let form = document.getElementById('form_updt_user');
+        form.classList.add('was-validated');
+        if (!justNumerexp.test(e_dniUpdt)) {
+            e_dniUpdt.value = "";
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Digite solo números en el campo del número de cédula'
+            });
+        }
+        if (!justNumerexp.test(e_telUpdt)) {
+            e_telUpdt.value = "";
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Digite solo números en el campo del número de teléfono'
+            });
+        } else if (reqProc.length === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Hay campos sin datos'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Hay campos vacíos'
+            });
+        }
+
     } else {
-        /////////////////////////////////////////////////////////
         usuario.temployee.dni = e_dniUpdt;
-        usuario.temployee.first_name = e_nombreUpdt;
-        usuario.temployee.first_surname = e_first_surnameUpdt;
-        ///////////////////////////////////////////////////////////////
-        usuario.temployee.second_surname = e_second_surnameUpdt;
+        usuario.temployee.firstName = e_nombreUpdt;
+        usuario.temployee.firstSurname = e_first_surnameUpdt;
+        usuario.temployee.secondSurname = e_second_surnameUpdt;
         usuario.temployee.email = e_emailUpdt;
         usuario.temployee.telephone = e_telUpdt;
-        usuario.temployee.tdepartment.departmentName = e_departmentUpdt;
-        usuario.temployee.tjob.jobTitle = e_positionUpdt;
+        usuario.temployee.tdepartment = e_departmentUpdt;
+        usuario.temployee.tjob.jobId = e_positionUpdtIndex;
+        usuario.temployee.tjob.jobTitle = e_positionUpdtValue;
         usuario.username = u_userUpdt;
         usuario.passwd = u_passUpdt;
         let data = new FormData();
-        data.append('oldDNI',selectedUser.dni)
-        data.append('oldUserName',selectedUser.username)
+        data.append('oldDNI', selectedUser.temployee.dni)
+        data.append('oldUserName', selectedUser.username)
         data.append('user', JSON.stringify(usuario));
         loadData(url, data, function () {
-
             menuUsers();
-
-
+            Swal.fire('Actualizado!', '', 'success');
+        }, function () {
             Swal.fire({
-                title: '¿Desea actualizar el usuario?',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: `Actualizar`,
-                denyButtonText: `NO Actualizar`,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    Swal.fire('Actualizado!', '', 'success')
-                } else if (result.isDenied) {
-                    Swal.fire('No se Actualizo el usuario', '', 'info')
-                }
+                icon: 'error',
+                title: 'Oops...',
+                text: "El usuario no se pudo actualizar"
             })
-
-
-
-
         });
     }
 }
@@ -563,33 +608,66 @@ function addEmployee() {
     let u_tel = document.getElementById('e_tel').value;
     let departments = document.getElementById('e_department').value;
     let position = document.getElementById('e_position').value;
+    let positionIndex = document.getElementById('e_position').selectedIndex;
     let u_user = document.getElementById('u_user').value;
     let u_pass = document.getElementById('u_pass').value;
-    let data = new FormData();
-    data.append('e_dni', u_dni);
-    data.append('e_name', u_name);
-    data.append('e_first', u_first);
-    data.append('e_second', u_second);
-    data.append('e_email', u_email);
-    data.append('e_tel', u_tel);
-    data.append('e_department', departments);
-    data.append('e_position', position);
-    data.append('u_user', u_user);
-    data.append('u_pass', u_pass);
-    loadData(url, data, () => {
-        // window.alert("Usuario Ingresado");
-        menuUsers();
-        Swal.fire({
-            icon: 'success',
-            title: 'Usuario Ingresado'
-        })
-    });
+    let justNumerexp = new RegExp("^[0-9]+$");
+    if (u_dni === "" || u_name === "" || u_first === "" || u_second === "" || u_email === "" || u_tel === "" || departments === "" ||
+        position === "" || u_user === "" || u_pass === "" || !justNumerexp.test(u_dni)) {
+        let form = document.getElementById('form_addEmployee');
+        form.classList.add('was-validated');
+        genPass('u_pass');
+        if (!justNumerexp.test(u_dni)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Digite solo números en el campo del número de cédula'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Hay campos vacíos'
+            });
+        }
+    } else {
+        let data = new FormData();
+        data.append('e_dni', u_dni);
+        data.append('e_name', u_name);
+        data.append('e_first', u_first);
+        data.append('e_second', u_second);
+        data.append('e_email', u_email);
+        data.append('e_tel', u_tel);
+        data.append('e_department', parseInt(departments));
+        data.append('e_position', positionIndex);
+        data.append('u_user', u_user);
+        data.append('u_pass', u_pass);
+        loadData(url, data, () => {
+            menuUsers();
+            Swal.fire({
+                icon: 'success',
+                title: 'Usuario Ingresado'
+            })
+        }, function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "El usuario ya existe"
+            })
+        });
+    }
 }
 
 function requestDepartments() {
     const url = 'http://localhost:8080/t_departments/listar';
     let data = new FormData();
-    loadData(url, data, loadDepartments);
+    loadData(url, data, loadDepartments, function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "No se pudo cargar la lista de departamentos desde la base de datos"
+        })
+    });
 }
 
 function loadDepartments(datos, id = 'e_department') {
@@ -598,6 +676,7 @@ function loadDepartments(datos, id = 'e_department') {
     list_depa.innerHTML = "";
     let option = document.createElement('option');
     option.innerText = 'Departamentos';
+    option.value = "";
     list_depa.add(option);
     for (let d of datos) {
         let option2 = document.createElement('option');
@@ -610,7 +689,13 @@ function loadDepartments(datos, id = 'e_department') {
 function requestRequirements() {
     const url = 'http://localhost:8080/t_requiremnt/listar';
     let data = new FormData();
-    loadData(url, data, loadRequirements);
+    loadData(url, data, loadRequirements, function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "No se pudo cargar la lista de requisitos desde la base de datos"
+        })
+    });
 }
 
 function loadRequirements(datos) {
@@ -685,13 +770,20 @@ function createProc() {
         data.append('title', title);
         data.append('description', desc);
         loadData(url, data, async function () {
-            menuProcess();
-            //window.alert("insertado")
-            Swal.fire({
-                icon: 'success',
-                title: 'Protocolo Creado!!'
-            })
-        });
+                menuProcess();
+                //window.alert("insertado")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Trámite Creado'
+                })
+            },
+            function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "El trámite ya existe"
+                })
+            });
     } else {
         let form = document.getElementById('form_create_proc');
         form.classList.add('was-validated');
@@ -716,13 +808,20 @@ function updateProc() {
         data.append('title', document.getElementById('title_procUpdt').value);
         data.append('description', document.getElementById('desc_procUdpt').value);
         loadData(url, data, async function () {
-            menuProcess();
-            //window.alert('Actualizado');
-            Swal.fire({
-                icon: 'success',
-                title: 'Tramite Actualizado'
-            })
-        });
+                menuProcess();
+                //window.alert('Actualizado');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Trámite Actualizado'
+                })
+            },
+            function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "El trámite no se pudo actualizar"
+                })
+            });
 
     }
 }

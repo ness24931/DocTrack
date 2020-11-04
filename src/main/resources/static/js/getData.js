@@ -1,10 +1,11 @@
-function loadData(url, data, callback) {
+function loadData(url, data, callback,error) {
     fetch(url, {
         // mode: 'cors',
         method: 'POST',
-        body: data,
+        body: data//,
         // headers: {
-        //     'Origin': 'http://localhost:3000'       
+            // 'Content-Type': 'application/json'
+            //     'Origin': 'http://localhost:3000'       
         // }
     }).
     then(result => {
@@ -14,11 +15,5 @@ function loadData(url, data, callback) {
         } else {
             return result.json();
         }
-    }).then(callback).catch(function () {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: "El usuario ya existe"
-        })
-    });
+    }).then(callback).catch(error);
 }

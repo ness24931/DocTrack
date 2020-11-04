@@ -13,9 +13,12 @@ import javax.persistence.*;
 public class TUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id
-	@Column(unique = true, nullable = false, length = 10)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="USER_ID", unique=true, nullable=false)
+	private int userId;
+
+	@Column(nullable = false, length = 15)
 	private String username;
 
 	@Column(nullable = false, length = 50)
@@ -95,6 +98,8 @@ public class TUser implements Serializable {
 		this.TRole = TRole;
 	}
 
+	
+
 	public TUser(String username, String passwd, String status, com.una.muni.model.TEmployee tEmployee,
 			com.una.muni.model.TRole tRole) {
 		this.username = username;
@@ -102,6 +107,14 @@ public class TUser implements Serializable {
 		this.status = status;
 		TEmployee = tEmployee;
 		TRole = tRole;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 //	public TEmployee getTEmployee1() {

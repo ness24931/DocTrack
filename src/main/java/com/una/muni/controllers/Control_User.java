@@ -76,7 +76,8 @@ public class Control_User {
 
 		u.setTEmployee(emplo);
 
-		if (repo.existsById(u.getUsername())) {
+		Optional<TUser> findUsername = repo.findByUsername(u.getUsername());
+		if (findUsername.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
 		} else {
 			repoE.save(u.getTEmployee());
@@ -106,19 +107,22 @@ public class Control_User {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public @ResponseBody String update(@RequestParam(name = "user") String u,
+	public @ResponseBody String update(@RequestParam(name = "user") String user,
 			@RequestParam(name = "oldDNI") String oldDni, @RequestParam(name = "oldUserName") String oldUserName) {
+		// System.out.println("olddni " + oldDni);
+		// System.out.println("oldUserName " + oldUserName);
+		// System.out.println("user " + user.getUsername());
+		// System.out.println("user " + u);
+		JSONObject o = new JSONObject(user);
 
-		JSONObject user = new JSONObject(u);
-		JSONObject role = user.getJSONObject("trole");
-		JSONObject employee = user.getJSONObject("temployee");
+		JSONObject role = o.getJSONObject("trole");
+		JSONObject employee = o.getJSONObject("temployee");
 		JSONObject job = employee.getJSONObject("tjob");
 		JSONObject department = employee.getJSONObject("tdepartment");
 		JSONArray resolutions = employee.getJSONArray("tresolutions");
 		JSONArray tickets = employee.getJSONArray("ttickets");
 
-		System.out.println(user.toString());
-		System.out.println(oldDni);
+		// System.out.println(user.toString());
 
 		TDepartment depa = new TDepartment();
 		depa.setDepartmentId(department.getInt("departmentId"));
@@ -132,6 +136,7 @@ public class Control_User {
 		TEmployee emp = new TEmployee();
 		emp.setDni(employee.getString("dni"));
 		emp.setEmail(employee.getString("email"));
+		System.out.println("nombre" + employee.getString("firstName"));
 		emp.setFirstName(employee.getString("firstName"));
 		emp.setFirstSurname(employee.getString("firstSurname"));
 		emp.setSecondSurname(employee.getString("secondSurname"));
@@ -146,22 +151,32 @@ public class Control_User {
 		trole.setRoleId(role.getInt("roleId"));
 
 		TUser tuser = new TUser();
-		tuser.setUsername(user.getString("username"));
-		tuser.setPasswd(user.getString("passwd"));
-		tuser.setStatus(user.getString("status"));
+		tuser.setUsername(o.getString("username"));
+		tuser.setPasswd(o.getString("passwd"));
+		tuser.setStatus(o.getString("status"));
 		tuser.setTEmployee(emp);
 		tuser.setTRole(trole);
 
-		TEmployee aux = repoE.findByDni(oldDni);
-		if (aux != null) {
-			emp.setEmployeeId(aux.getEmployeeId());
-			repoE.save(emp);
-			// repo.updateUserName(tuser.getUsername(), oldUserName);
-			repo.save(tuser);
+		JSONObject resp = new JSONObject();
+		Optional<TEmployee> aux = repoE.findByDni(oldDni);
+		if (aux.isPresent()) {
+			Optional<TUser> findUser = repo.findByUsername(oldUserName);
+			if (findUser.isPresent()) {
+				// System.out.println("entro al findUser is present");
+				emp.setEmployeeId(aux.get().getEmployeeId());
+				repoE.save(emp);
+				tuser.setUserId(findUser.get().getUserId());
+				repo.save(tuser);
+				o.put("response", "ok");
+				// System.out.println("si se actualizo");
+			} else {
+				resp.put("response", "bad");
+			}
+		} else {
+			resp.put("response", "bad");
 		}
-
-		JSONObject o = new JSONObject();
-		o.put("response", "ok");
-		return o.toString();
+		// o.put("response", "bad");
+		System.out.println(resp.toString());
+		return resp.toString();
 	}
 }

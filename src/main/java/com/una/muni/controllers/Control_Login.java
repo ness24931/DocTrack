@@ -52,7 +52,7 @@ public class Control_Login {
 	// version nestor
 	@RequestMapping(value = "validate", method = RequestMethod.POST)
 	public String validate(@RequestParam(name = "user") String user, @RequestParam(name = "pass") String pass) {
-		Optional<TUser> u = repo.findById(user);
+		Optional<TUser> u = repo.findByUsername(user);
 		System.out.println(user);
 		if (u.isPresent() && u.get().getPasswd().equals(pass) && u.get().getStatus().equals("ENABLED")) {
 			JSONObject o = new JSONObject();

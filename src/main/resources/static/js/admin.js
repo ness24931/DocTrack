@@ -75,7 +75,10 @@ function seleccionarProc() {
             let button = document.createElement('button');
             button.classList.add("btn");
             button.classList.add("btn-secondary");
-            button.click = `deleteReqProc(${r.requirementId})`;
+            // button.click = `deleteReqProc(${r.requirementId})`;
+            button.addEventListener('click', () => {
+                deleteReqProc(r.requirementId);
+            });
             button.innerText = 'Eliminar';
             tr.appendChild(td);
             tr.appendChild(button);
@@ -738,22 +741,29 @@ function deleteReqProc(id) {
     if (index > -1) {
         reqProc.splice(index, 1);
     }
-    let tbody = document.getElementById("body_panelAddReq");
-    tbody.innerHTML = "";
-    for (let rq of reqProc) {
-        let tr = document.createElement('tr');
-        let td = document.createElement('td');
-        td.innerText = rq.title;
-        let button = document.createElement('button');
-        button.classList.add("btn");
-        button.classList.add("btn-secondary");
-        button.click = `deleteReqProc(${rq.requirementId})`;
-        button.innerText = 'Eliminar';
-        tr.appendChild(td);
-        tr.appendChild(button);
-        tbody.appendChild(tr);
-        s.remove(parseInt(s.selectedIndex));
-        document.getElementById('list_req_proc').removeAttribute('required');
+    let tbodies = ['body_panelAddReq', 'body_panelAddReqU'];
+    let select = ['list_req_proc', 'list_req_procU'];
+    for (let i = 0; i < 2; i++) {
+        let tbody = document.getElementById(tbodies[i]);
+        tbody.innerHTML = "";
+        for (let rq of reqProc) {
+            let tr = document.createElement('tr');
+            let td = document.createElement('td');
+            td.innerText = rq.title;
+            let button = document.createElement('button');
+            button.classList.add("btn");
+            button.classList.add("btn-secondary");
+            button.addEventListener('click', () => {
+                deleteReqProc(r.requirementId);
+            });
+            // button.click = `deleteReqProc(${rq.requirementId})`;
+            button.innerText = 'Eliminar';
+            tr.appendChild(td);
+            tr.appendChild(button);
+            tbody.appendChild(tr);
+            // s.remove(parseInt(s.selectedIndex));
+            // document.getElementById(select[i]).removeAttribute('required');
+        }
     }
 
 }
@@ -771,18 +781,24 @@ function addReq(select = 'list_req_proc') {
         let button = document.createElement('button');
         button.classList.add("btn");
         button.classList.add("btn-secondary");
-        let index=parseInt(s.value);
-        let rId=listRequisitos[index].requirementId;
+        let index = parseInt(s.value);
+        let rId = listRequisitos[index].requirementId;
         button.addEventListener("click", function () {
             deleteReqProc(rId);
         });
         button.innerText = 'Eliminar';
         tr.appendChild(td);
         tr.appendChild(button);
-        let tbody = document.getElementById("body_panelAddReq");
+        let nom = "";
+        if (select !== 'list_req_proc') {
+            nom = 'body_panelAddReqU';
+        } else {
+            nom = 'body_panelAddReq';
+        }
+        let tbody = document.getElementById(nom);
         tbody.appendChild(tr);
         s.remove(parseInt(s.selectedIndex));
-        document.getElementById('list_req_proc').removeAttribute('required');
+        document.getElementById(select).removeAttribute('required');
 
         // li.innerHTML = `<div><p>${listRequisitos[i].title}</p><span><button type='button' class="btn btn-secondary" onclick="deleteReqProc(${listRequisitos[i].requirementId})">Eliminar</button></span></div>`;
         // li.setAttribute('id', `li_${listRequisitos[i].requirementId}`)
@@ -839,13 +855,12 @@ function updateProc() {
     } else {
         const url = 'http://localhost:8080/t_requests/update';
         let data = new FormData();
-        data.append('TRequirements', JSON.stringify(listRequisitos));
+        data.append('TRequirements', JSON.stringify(reqProc));
         data.append('idprocess', selected.requestId);
-        data.append('title', document.getElementById('title_procUpdt').value);
-        data.append('description', document.getElementById('desc_procUdpt').value);
+        data.append('title', document.getElementById('title_procU').value);
+        data.append('description', document.getElementById('desc_procU').value);
         loadData(url, data, async function () {
                 menuProcess();
-                //window.alert('Actualizado');
                 Swal.fire({
                     icon: 'success',
                     title: 'Trámite Actualizado'

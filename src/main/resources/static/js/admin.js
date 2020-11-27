@@ -614,10 +614,18 @@ function addEmployee() {
     let u_pass = document.getElementById('u_pass').value;
     let justNumerexp = new RegExp("^[0-9]+$");
     if (u_dni === "" || u_name === "" || u_first === "" || u_second === "" || u_email === "" || u_tel === "" || departments === "" ||
-        position === "" || u_user === "" || u_pass === "" || !justNumerexp.test(u_dni) || !justNumerexp.test(u_tel)) {
+        position === "" || u_user === "" || u_pass === "" || !justNumerexp.test(u_dni) || !justNumerexp.test(u_tel) || listUsuarios.find(e => e.temployee.dni === u_dni)) {
         let form = document.getElementById('form_addEmployee');
         form.classList.add('was-validated');
         genPass('u_pass');
+        if (listUsuarios.find(e => e.temployee.dni === u_dni)) {
+            document.getElementById('e_dni').value = "";
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ya existe un usuario con ese numero de cédula'
+            });
+        }
         if (!justNumerexp.test(u_dni)) {
             document.getElementById('e_dni').value = "";
             Swal.fire({
@@ -625,18 +633,13 @@ function addEmployee() {
                 title: 'Oops...',
                 text: 'Digite solo números en el campo del número de cédula'
             });
-        } else if (!justNumerexp.test(u_tel)) {
+        }
+        if (!justNumerexp.test(u_tel)) {
             document.getElementById('e_tel').value = "";
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Digite solo números en el campo del número de teléfono'
-            });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Hay campos vacíos'
             });
         }
     } else {
@@ -817,7 +820,8 @@ function createProc() {
     const url = 'http://localhost:8080/t_requests/insert';
     let title = document.getElementById('title_proc').value;
     let desc = document.getElementById('desc_proc').value;
-    if (title.length > 0 && title != undefined && reqProc.length > 0 && desc.length > 0 && desc != undefined) {
+    if (title.length > 0 && title != undefined && reqProc.length > 0 && desc.length > 0 && desc != undefined &&
+        !listTramites.find(t => t.title === title)) {
         data.append('TRequirements', JSON.stringify(reqProc));
         data.append('title', title);
         data.append('description', desc);
@@ -839,6 +843,13 @@ function createProc() {
     } else {
         let form = document.getElementById('form_create_proc');
         form.classList.add('was-validated');
+        if (listTramites.find(t => t.title === title)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El trámite que desea crear ya existe'
+            })
+        }
         if (reqProc.length === 0) {
             Swal.fire({
                 icon: 'error',
@@ -853,27 +864,36 @@ function updateProc() {
     if (selected.requestId === undefined) {
         window.alert('Seleccione un registro');
     } else {
-        const url = 'http://localhost:8080/t_requests/update';
-        let data = new FormData();
-        data.append('TRequirements', JSON.stringify(reqProc));
-        data.append('idprocess', selected.requestId);
-        data.append('title', document.getElementById('title_procU').value);
-        data.append('description', document.getElementById('desc_procU').value);
-        loadData(url, data, async function () {
-                menuProcess();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Trámite Actualizado'
-                })
-            },
-            function () {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: "El trámite no se pudo actualizar"
-                })
+        let title = document.getElementById('title_procU').value;
+        let desc = document.getElementById('desc_procU').value;
+        if (title !== "" && desc !== "" && reqProc.length > 0) {
+            const url = 'http://localhost:8080/t_requests/update';
+            let data = new FormData();
+            data.append('TRequirements', JSON.stringify(reqProc));
+            data.append('idprocess', selected.requestId);
+            data.append('title', title);
+            data.append('description', desc);
+            loadData(url, data, async function () {
+                    menuProcess();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Trámite Actualizado'
+                    })
+                },
+                function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: "El trámite no se pudo actualizar"
+                    })
+                });
+        } else {
+            document.getElementById('form_create_procU').classList.add('was-validated');
+            Swal.fire({
+                icon: 'error',
+                text: "Hay campos vacíos"
             });
-
+        }
     }
 }
 
